@@ -15,7 +15,7 @@ export default function List() {
     const fetchRoles = async () => {
         await axios.get(`http://user-laravel-project.test/api/roles`).then(({data}) => {
             console.log(data)
-            setRoles(data)
+            setRoles(data.data)
         })
     }
 

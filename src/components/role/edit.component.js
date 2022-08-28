@@ -1,4 +1,4 @@
-import React, { useMemo,useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -6,47 +6,41 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import {Link} from 'react-router-dom';
- const [notifications] = useState([])
-const Checkbox = ({ obj, onChange }) => {
-  return (
-    <>
-      <input
-        type="checkbox"
-        id={`custom-checkbox-${obj.index}`}
-        name={"notifications[]"}
-        value={obj.checked}
-        onChange={() => onChange({ ...obj, checked: !obj.checked} ,const target = event.target;
-                                                                   var value = target.value;
-                                                                   if(target.checked){
-                                                                   this.state.notifications[value] = value;
-                                                                   }else{
-                                                                   this.state.notifications.splice(value, 1);
-                                                                   })}
-      />
-      {obj.name}
-    </>
-  );
-};
-export default function EditRole() {
-  const [MyCheckBoxList] = useState([])
-const [data, setData] = useState(
-    MyCheckBoxList.sort((a, b) => a.order - b.order)
-  );
 
-    const navigate = useNavigate();
+
+
+export default function EditRole() {
+
+ const navigate = useNavigate();
+ const [checkedPermissions, setPermissions] = useState({});
+
+  const toggleHandler = (item) => () => {
+    setPermissions((state) => ({
+      ...state,
+      [item.id]: state[item.id]
+        ? null
+        : {
+            id: item.id,
+          }
+    }));
+  };
+
 
     const {id} = useParams()
 
-  const [permissions, setProducts] = useState([])
+  const [permissionsData, setProducts] = useState([])
 
     const [name, setName] = useState("")
+     const [permissions, setRolePermissions] = useState("")
     const [validationError, setValidationError] = useState({})
 
     useEffect(()=>{
         fetchRole();
-          fetchProducts()
-    },[])
+          fetchProducts();
+
+           console.log(checkedPermissions);
+    },[checkedPermissions])
+
 
       const fetchProducts = async () => {
             await axios.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
@@ -55,11 +49,35 @@ const [data, setData] = useState(
             })
         }
 
+          const addPermissions = async (permissions) => {
+          console.log('here')
+                permissions.map((item) =>
+                 setPermissions((state) => ({
+                      ...state,
+                      [item.id]: state[item.id]
+                        = {
+                            id: item.id,
+                          }
+                    }))
+
+)
+console.log(checkedPermissions)
+                }
+
+
+
+
+
     const fetchRole = async () => {
         await axios.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
-            console.log(data);
-            const { name} = data
+
+            const { name} = data.data
+            const {permissions} = data.data
+            console.log(permissions)
+            setRolePermissions(permissions)
             setName(name)
+            addPermissions(permissions)
+            console.log(checkedPermissions)
 
         }).catch(({response: {data}}) => {
             Swal.fire({
@@ -69,7 +87,7 @@ const [data, setData] = useState(
         })
     }
 
-ortktperp//.;l,kim
+
     const updateRole = async (e) => {
         e.preventDefault();
 
@@ -102,9 +120,10 @@ ortktperp//.;l,kim
         const formData = new FormData()
 
         formData.append('_method', 'PUT');
-        formData.append('notifications', "notifications[]")
+        console.log( JSON.stringify(permissions));
+        formData.append('permissions', JSON.stringify(permissions))
 
-        await axios.post(`http://user-laravel-project.test/api/role/monita/${id}`, formData).then(({data}) => {
+        await axios.post(`http://user-laravel-project.test/api/role/permission/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message
@@ -176,16 +195,29 @@ ortktperp//.;l,kim
 
 
 
-  {permissions.map((obj, index) => (
-        <li key={index}>
-          <Checkbox className='px-2'
-            obj={obj}
-            onChange={(item) => {
-              setData(permissions.map((d) => (d.order === item.order ? item : d)));
-            }}
-          />
-        </li>
-      ))}
+  {permissionsData.map((item) => {
+             return (
+               <div
+                 key={item.id}
+                 style={{
+                   display: "flex",
+                   width: "150px"
+                 }}
+               >
+
+                 <input
+
+                   onChange={toggleHandler(item)}
+                   checked={checkedPermissions[item.id]}
+                    value={checkedPermissions[item.id]}
+                   style={{ margin: "10px" }}
+                   type="checkbox"
+                 />
+                                <Form.Label>{item.name}</Form.Label>
+
+               </div>
+             );
+           })}
 
 
                            </div>
