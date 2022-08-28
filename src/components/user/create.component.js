@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row';
@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 export default function CreateProduct() {
     const navigate = useNavigate();
@@ -13,9 +15,47 @@ export default function CreateProduct() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [roles, setRoles] = useState("")
+    const [roles, setRoles] = useState([])
+    const [selectedOption,setselectedOption] = useState([]);
+    // const [name, setNames] = useState([])
     const [validationError, setValidationError] = useState({})
+    const animatedComponents = makeAnimated();
+    const [newarray,setarray]=useState([]);
+    useEffect(() => {
+        fetchRoles()
+    }, [newarray])
 
+    const onSelectValues = (value) => {
+        // clone state
+        // const clonedSelectState = JSON.parse(JSON.stringify(selectState));
+        //
+        // clonedSelectState[index] = value;
+        // setSelectState(clonedSelectState);
+        console.log(value);
+    };
+
+
+    const fetchRoles = async () => {
+        // const API = await axios.get(`http://user-laravel-project.test/api/roles`).then(({data}) => {
+        //
+        //     setRoles(data.data)
+        //
+        //
+        // })
+        const API = await axios.get('http://user-laravel-project.test/api/roles')
+        const serverResponse = API.data.data
+        const dropDownValue = serverResponse.map((response) => ({
+            "value" : response.id,
+            "label" : response.name
+        }))
+        console.log(dropDownValue)
+        setRoles(dropDownValue)
+    }
+
+    const  handleChange = (selectedOption) => {
+        setarray(selectedOption)
+        console.log(newarray)
+    }
 
     const createProduct = async (e) => {
         e.preventDefault();
@@ -86,7 +126,7 @@ export default function CreateProduct() {
                                         <Col>
                                             <Form.Group controlId="Password">
                                                 <Form.Label>Password</Form.Label>
-                                                <Form.Control type="password" value={password}  required onChange={(event) => {
+                                                <Form.Control type="password" value={password} required onChange={(event) => {
                                                     setPassword(event.target.value)
                                                 }}/>
                                             </Form.Group>
@@ -106,9 +146,11 @@ export default function CreateProduct() {
                                         <Col>
                                             <Form.Group controlId="Roles">
                                                 <Form.Label>Roles</Form.Label>
-                                                <Form.Control as="textarea" rows={3} value={roles} onChange={(event) => {
-                                                    setRoles(event.target.value)
-                                                }}/>
+                                                {/*<Form.Control as="textarea" rows={3} value={roles} onChange={(event) => {*/}
+                                                {/*    setRoles(event.target.value)*/}
+                                                {/*}}/>*/}
+                                                <Select name={"roles[]"} options={roles}   onChange={handleChange} components={animatedComponents}  isMulti/>
+
                                             </Form.Group>
                                         </Col>
                                     </Row>
