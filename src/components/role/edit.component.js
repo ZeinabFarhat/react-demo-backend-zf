@@ -167,18 +167,15 @@ export default function EditRole() {
                                     <Button variant="primary" className="mt-2" size="sm" block="block" type="submit">
                                                                             Update
                                                                         </Button>
-                                                                          </Form>
+                                </Form>
 
-
-                                                                           <Form onSubmit={updateRolePermissions}>
-
+                                <Form onSubmit={updateRolePermissions}>
                                     <Row className='py-3'>
-                             <div className="col-12">
-                    <div className="card card-body">
-                    <Form.Label>Permissions</Form.Label>
-                        <div className="table-responsive">
-
-                             {permissionsData.map((item) => {
+                                    <div className="col-12">
+                                    <div className="card card-body">
+                                    <Form.Label>Permissions</Form.Label>
+                                    <div className="table-responsive">
+                                    {permissionsData.map((item) => {
                                          return (
                                                   <div
                                                      key={item.id}
@@ -187,15 +184,15 @@ export default function EditRole() {
                                                       width: "150px"
                                                }} >
 
-                          <input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />
-                               <Form.Label>{item.name}</Form.Label>
-                           </div>
-                             ); })}
-                           </div>
-                           </div>
-                            <Button variant="primary" className="mt-2" size="sm" block="block" type="submit"> Update </Button>
-                           </div>
-                            </Row>
+                                  <input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />
+                                  <Form.Label>{item.name}</Form.Label>
+                                  </div>
+                                  ); })}
+                                  </div>
+                                  </div>
+                                 <Button variant="primary" className="mt-2" size="sm" block="block" type="submit"> Update </Button>
+                                 </div>
+                                 </Row>
                             </Form>
                             </div>
                         </div>
