@@ -6,22 +6,30 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 export default function EditUser() {
     const navigate = useNavigate();
-
     const {id} = useParams()
-
+    const animatedComponents = makeAnimated();
 
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [roles, setRoles] = useState("")
+    const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
+    const [newarray,setarray]=useState([]);
 
     useEffect(()=>{
         fetchUser()
     },[])
+
+      const  handleChange = (selectedOption) => {
+            setarray(selectedOption)
+            console.log(newarray)
+        }
+
     const fetchUser = async () => {
         await axios.get(`http://user-laravel-project.test/api/users/${id}`).then(({data}) => {
 
@@ -29,7 +37,8 @@ export default function EditUser() {
             setName(name)
             setPassword(password)
             setEmail(email)
-            setRoles(roles)
+            setRoles(data.data.roles)
+            console.log(data.data.roles)
         }).catch(({response: {data}}) => {
             Swal.fire({
                 text: data.message,
@@ -127,16 +136,14 @@ export default function EditUser() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    {/*<Row className="my-3">*/}
-                                    {/*    <Col>*/}
-                                    {/*        <Form.Group controlId="Roles">*/}
-                                    {/*            <Form.Label>Roles</Form.Label>*/}
-                                    {/*            <Form.Control as="textarea" rows={3} value={roles} onChange={(event) => {*/}
-                                    {/*                setRoles(event.target.value)*/}
-                                    {/*            }}/>*/}
-                                    {/*        </Form.Group>*/}
-                                    {/*    </Col>*/}
-                                    {/*</Row>*/}
+                                 <Row className="my-3">
+                                                                      <Col>
+                                                                          <Form.Group controlId="Roles">
+                                                                              <Form.Label>Roles</Form.Label>
+                                                                              <Select name={"roles[]"} options={roles}   onChange={handleChange} components={animatedComponents}  isMulti/>
+                                                                          </Form.Group>
+                                                                      </Col>
+                                                                  </Row>
                                     <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
                                         Update
                                     </Button>

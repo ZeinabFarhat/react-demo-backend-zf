@@ -3,24 +3,24 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import Form from 'react-bootstrap/Form'
 
 
 export default function List() {
 
-    const [users, setProducts] = useState([])
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
-        fetchProducts()
+        fetchUsers()
     }, [])
 
-    const fetchProducts = async () => {
+    const fetchUsers = async () => {
         await axios.get(`http://user-laravel-project.test/api/users`).then(({data}) => {
-            console.log(data);
-            setProducts(data.data);
+            setUsers(data.data);
         })
     }
 
-    const deleteProduct = async (id) => {
+    const deleteUser = async (id) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -42,7 +42,7 @@ export default function List() {
                 icon: "success",
                 text: data.message
             })
-            fetchProducts()
+            fetchUsers()
         }).catch(({response: {data}}) => {
             Swal.fire({
                 text: data.message,
@@ -67,7 +67,7 @@ export default function List() {
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Role</th>
+                                    <th>Roles</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -80,12 +80,16 @@ export default function List() {
                                             <tr key={key}>
                                                 <td>{row['name']}</td>
                                                 <td>{row['email']}</td>
-                                                <td></td>
+                                                <td>{row['roles'].map((row,key)=>(
+                                                        row['name']
+                                                    ))}
+                                                </td>
+
                                                 <td>
                                                     <Link to={`/user/edit/${row.id}`} className='btn btn-success me-2'>
                                                         Edit
                                                     </Link>
-                                                    <Button variant="danger" onClick={() => deleteProduct(row.id)}>
+                                                    <Button variant="danger" onClick={() => deleteUser(row.id)}>
                                                         Delete
                                                     </Button>
                                                 </td>

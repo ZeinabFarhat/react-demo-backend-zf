@@ -21,7 +21,6 @@ export default function CreateProduct() {
     const [newarray,setarray]=useState([]);
     useEffect(() => {
         fetchRoles();
-        console.log(newarray)
     }, [newarray])
 
 
@@ -132,11 +131,7 @@ export default function CreateProduct() {
                                         <Col>
                                             <Form.Group controlId="Roles">
                                                 <Form.Label>Roles</Form.Label>
-                                                {/*<Form.Control as="textarea" rows={3} value={roles} onChange={(event) => {*/}
-                                                {/*    setRoles(event.target.value)*/}
-                                                {/*}}/>*/}
                                                 <Select name={"roles[]"} options={roles}   onChange={handleChange} components={animatedComponents}  isMulti/>
-
                                             </Form.Group>
                                         </Col>
                                     </Row>
