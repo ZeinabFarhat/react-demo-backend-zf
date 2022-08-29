@@ -7,8 +7,6 @@ import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-
-
 export default function EditRole() {
 
  const navigate = useNavigate();
@@ -25,7 +23,6 @@ export default function EditRole() {
     }));
   };
 
-
     const {id} = useParams()
 
   const [permissionsData, setProducts] = useState([])
@@ -36,11 +33,8 @@ export default function EditRole() {
 
     useEffect(()=>{
         fetchRole();
-          fetchProducts();
-
-           console.log(checkedPermissions);
+        fetchProducts();
     },[checkedPermissions])
-
 
       const fetchProducts = async () => {
             await axios.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
@@ -50,7 +44,6 @@ export default function EditRole() {
         }
 
           const addPermissions = async (permissions) => {
-          console.log('here')
                 permissions.map((item) =>
                  setPermissions((state) => ({
                       ...state,
@@ -58,11 +51,8 @@ export default function EditRole() {
                         = {
                             id: item.id,
                           }
-                    }))
+                    })))  }
 
-)
-console.log(checkedPermissions)
-                }
 
     const fetchRole = async () => {
         await axios.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
@@ -112,7 +102,6 @@ console.log(checkedPermissions)
 
    const updateRolePermissions = async (e) => {
         e.preventDefault();
-
         const formData = new FormData()
 
         formData.append('_method', 'PUT');
@@ -184,52 +173,30 @@ console.log(checkedPermissions)
                                                                            <Form onSubmit={updateRolePermissions}>
 
                                     <Row className='py-3'>
-  <div className="col-12">
+                             <div className="col-12">
                     <div className="card card-body">
                     <Form.Label>Permissions</Form.Label>
                         <div className="table-responsive">
 
+                             {permissionsData.map((item) => {
+                                         return (
+                                                  <div
+                                                     key={item.id}
+                                                     style={{
+                                                     display: "flex",
+                                                      width: "150px"
+                                               }} >
 
-
-  {permissionsData.map((item) => {
-             return (
-               <div
-                 key={item.id}
-                 style={{
-                   display: "flex",
-                   width: "150px"
-                 }}
-               >
-
-                 <input
-
-                   onChange={toggleHandler(item)}
-                   checked={checkedPermissions[item.id]}
-                    value={checkedPermissions[item.id]}
-                   style={{ margin: "10px" }}
-                   type="checkbox"
-                 />
-                                <Form.Label>{item.name}</Form.Label>
-
-               </div>
-             );
-           })}
-
-
+                          <input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />
+                               <Form.Label>{item.name}</Form.Label>
                            </div>
-
+                             ); })}
                            </div>
-                            <Button variant="primary" className="mt-2" size="sm" block="block" type="submit">
-                                                                                                    Update
-                                                                                                </Button>
                            </div>
-
-                                    </Row>
-                                    </Form>
-
-
-
-
+                            <Button variant="primary" className="mt-2" size="sm" block="block" type="submit"> Update </Button>
+                           </div>
+                            </Row>
+                            </Form>
                             </div>
                         </div>
                     </div>

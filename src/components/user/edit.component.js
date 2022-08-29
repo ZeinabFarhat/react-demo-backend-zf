@@ -17,49 +17,60 @@ export default function EditUser() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    const [roles, setRoles] = useState([])
+    const [selectedRoles, setRoles] = useState([])
+     const [roles, setAllRoles] = useState([])
     const [validationError, setValidationError] = useState({})
     const [newarray,setarray]=useState([]);
 
     useEffect(()=>{
-        fetchUser()
-    },[])
+        fetchUser();
+        fetchRoles();
+    },[newarray])
 
       const  handleChange = (selectedOption) => {
             setarray(selectedOption)
-            console.log(newarray)
+
         }
 
-    const fetchUser = async () => {
-        await axios.get(`http://user-laravel-project.test/api/users/${id}`).then(({data}) => {
+         const fetchRoles = async () => {
 
-            const { name,password,email} = data.data
-            setName(name)
-            setPassword(password)
-            setEmail(email)
-            setRoles(data.data.roles)
-            console.log(data.data.roles)
-        }).catch(({response: {data}}) => {
-            Swal.fire({
-                text: data.message,
-                icon: "error"
-            })
-        })
+                const API = await axios.get('http://user-laravel-project.test/api/roles')
+                const serverResponse = API.data.data
+                const dropDownValue = serverResponse.map((response) => ({
+                    "value" : response.id,
+                    "label" : response.name
+                }))
+                console.log(dropDownValue)
+                setAllRoles(dropDownValue)
+            }
+
+    const fetchUser = async () => {
+        const API = await axios.get(`http://user-laravel-project.test/api/users/${id}`)
+
+          const serverResponse = API.data.data['roles']
+                const dropDownValue = serverResponse.map((response) => ({
+                    "value" : response.id,
+                    "label" : response.name
+                }))
+
+                setRoles(dropDownValue)
+        const { name,password,email} = API.data.data
+        setName(name)
+        setPassword(password)
+        setEmail(email)
+        setRoles(dropDownValue)
     }
 
-
     const updateUser = async (e) => {
-        e.preventDefault();
 
+        e.preventDefault();
         const formData = new FormData()
-        console.log(name)
+
         formData.append('_method', 'PUT');
         formData.append('name', name)
         formData.append('password', password)
         formData.append('email', email)
-        formData.append('roles', roles)
-        console.log(formData)
-
+        formData.append('roles', JSON.stringify(newarray))
 
         await axios.post(`http://user-laravel-project.test/api/users/${id}`, formData).then(({data}) => {
             Swal.fire({
@@ -137,10 +148,11 @@ export default function EditUser() {
                                         </Col>
                                     </Row>
                                  <Row className="my-3">
-                                                                      <Col>
-                                                                          <Form.Group controlId="Roles">
-                                                                              <Form.Label>Roles</Form.Label>
-                                                                              <Select name={"roles[]"} options={roles}   onChange={handleChange} components={animatedComponents}  isMulti/>
+                                          <Col>
+                                           <Form.Group controlId="Roles">
+                                                       <Form.Label>Roles</Form.Label>
+                                                                              <Select name={"roles[]"} options={roles} value={selectedRoles}  onChange={handleChange} components={animatedComponents}
+                                                                              isMulti/>
                                                                           </Form.Group>
                                                                       </Col>
                                                                   </Row>

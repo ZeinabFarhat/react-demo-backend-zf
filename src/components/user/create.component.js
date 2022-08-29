@@ -18,7 +18,7 @@ export default function CreateProduct() {
     const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
     const animatedComponents = makeAnimated();
-    const [newarray,setarray]=useState([]);
+    const [newarray, setarray] = useState([]);
     useEffect(() => {
         fetchRoles();
     }, [newarray])
@@ -29,19 +29,16 @@ export default function CreateProduct() {
         const API = await axios.get('http://user-laravel-project.test/api/roles')
         const serverResponse = API.data.data
         const dropDownValue = serverResponse.map((response) => ({
-            "value" : response.id,
-            "label" : response.name
+            "value": response.id, "label": response.name
         }))
-        console.log(dropDownValue)
         setRoles(dropDownValue)
     }
 
-    const  handleChange = (selectedOption) => {
+    const handleChange = (selectedOption) => {
         setarray(selectedOption)
-        console.log(newarray)
     }
 
-    const createProduct = async (e) => {
+    const createUser = async (e) => {
         e.preventDefault();
 
         const formData = new FormData()
@@ -54,8 +51,7 @@ export default function CreateProduct() {
 
         await axios.post(`http://user-laravel-project.test/api/users`, formData).then(({data}) => {
             Swal.fire({
-                icon: "success",
-                text: data.message
+                icon: "success", text: data.message
             })
             navigate("/")
         }).catch(({response}) => {
@@ -63,15 +59,13 @@ export default function CreateProduct() {
                 setValidationError(response.data.errors)
             } else {
                 Swal.fire({
-                    text: response.data.message,
-                    icon: "error"
+                    text: response.data.message, icon: "error"
                 })
             }
         })
     }
 
-    return (
-        <div className="container">
+    return (<div className="container">
             <div className="row justify-content-center">
                 <div className="col-12 col-sm-12 col-md-6">
                     <div className="card">
@@ -79,24 +73,16 @@ export default function CreateProduct() {
                             <h4 className="card-title">Add User</h4>
                             <hr/>
                             <div className="form-wrapper">
-                                {
-                                    Object.keys(validationError).length > 0 && (
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="alert alert-danger">
-                                                    <ul className="mb-0">
-                                                        {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
-                                                            ))
-                                                        }
-                                                    </ul>
-                                                </div>
+                                {Object.keys(validationError).length > 0 && (<div className="row">
+                                        <div className="col-12">
+                                            <div className="alert alert-danger">
+                                                <ul className="mb-0">
+                                                    {Object.entries(validationError).map(([key, value]) => (<li key={key}>{value}</li>))}
+                                                </ul>
                                             </div>
                                         </div>
-                                    )
-                                }
-                                <Form onSubmit={createProduct}>
+                                    </div>)}
+                                <Form onSubmit={createUser}>
                                     <Row>
                                         <Col>
                                             <Form.Group controlId="Name">
@@ -131,7 +117,7 @@ export default function CreateProduct() {
                                         <Col>
                                             <Form.Group controlId="Roles">
                                                 <Form.Label>Roles</Form.Label>
-                                                <Select name={"roles[]"} options={roles}   onChange={handleChange} components={animatedComponents}  isMulti/>
+                                                <Select name={"roles[]"} options={roles} onChange={handleChange} components={animatedComponents} isMulti/>
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -144,6 +130,5 @@ export default function CreateProduct() {
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        </div>)
 }

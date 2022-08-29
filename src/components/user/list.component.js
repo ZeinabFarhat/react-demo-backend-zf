@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import Form from 'react-bootstrap/Form'
 
 
 export default function List() {
@@ -75,8 +74,6 @@ export default function List() {
                                 {
                                     users.length > 0 && (
                                         users.map((row, key) => (
-
-
                                             <tr key={key}>
                                                 <td>{row['name']}</td>
                                                 <td>{row['email']}</td>
