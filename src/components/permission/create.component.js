@@ -9,11 +9,8 @@ import {useNavigate} from 'react-router-dom'
 
 export default function CreatePermission() {
     const navigate = useNavigate();
-
     const [name, setName] = useState("")
-
     const [validationError, setValidationError] = useState({})
-
 
     const createProduct = async (e) => {
         e.preventDefault();
