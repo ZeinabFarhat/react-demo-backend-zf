@@ -16,32 +16,17 @@ export default function CreateProduct() {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [roles, setRoles] = useState([])
-    const [selectedOption,setselectedOption] = useState([]);
-    // const [name, setNames] = useState([])
     const [validationError, setValidationError] = useState({})
     const animatedComponents = makeAnimated();
     const [newarray,setarray]=useState([]);
     useEffect(() => {
-        fetchRoles()
+        fetchRoles();
+        console.log(newarray)
     }, [newarray])
-
-    const onSelectValues = (value) => {
-        // clone state
-        // const clonedSelectState = JSON.parse(JSON.stringify(selectState));
-        //
-        // clonedSelectState[index] = value;
-        // setSelectState(clonedSelectState);
-        console.log(value);
-    };
 
 
     const fetchRoles = async () => {
-        // const API = await axios.get(`http://user-laravel-project.test/api/roles`).then(({data}) => {
-        //
-        //     setRoles(data.data)
-        //
-        //
-        // })
+
         const API = await axios.get('http://user-laravel-project.test/api/roles')
         const serverResponse = API.data.data
         const dropDownValue = serverResponse.map((response) => ({
@@ -65,7 +50,8 @@ export default function CreateProduct() {
         formData.append('name', name)
         formData.append('password', password)
         formData.append('email', email)
-        formData.append('roles', roles)
+        console.log(newarray)
+        formData.append('roles', JSON.stringify(newarray))
 
         await axios.post(`http://user-laravel-project.test/api/users`, formData).then(({data}) => {
             Swal.fire({

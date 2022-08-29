@@ -64,10 +64,6 @@ export default function EditRole() {
 console.log(checkedPermissions)
                 }
 
-
-
-
-
     const fetchRole = async () => {
         await axios.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
 
