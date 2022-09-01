@@ -25,10 +25,12 @@ export default function EditUser() {
     useEffect(()=>{
         fetchUser();
         fetchRoles();
+        console.log(newarray);
     },[newarray])
 
       const  handleChange = (selectedOption) => {
             setarray(selectedOption)
+            console.log("changed")
 
         }
 
@@ -40,7 +42,7 @@ export default function EditUser() {
                     "value" : response.id,
                     "label" : response.name
                 }))
-                console.log(dropDownValue)
+
                 setAllRoles(dropDownValue)
             }
 

@@ -40,7 +40,7 @@ function App() {
             <Row>
             <Col md={12}>
                 <Routes>
-                    <Route exact path='/permissions' element={<PermissionList />} />
+                    <Route  path='/permissions' element={<PermissionList />} />
                     <Route path="/permission/create" element={<CreatePermission />} />
                     <Route path="/permission/edit/:id" element={<EditPermission />} />
                 </Routes>
@@ -49,7 +49,7 @@ function App() {
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route exact path='/roles' element={<RoleList />} />
+                        <Route  path='/roles' element={<RoleList />} />
                         <Route path="/role/create" element={<CreateRole/>} />
                         <Route path="/role/edit/:id" element={<EditRole />} />
                     </Routes>
@@ -60,7 +60,7 @@ function App() {
                     <Routes>
                         <Route path="/user/create" element={<CreateUser />} />
                         <Route path="/user/edit/:id" element={<EditUser />} />
-                        <Route exact path='/' element={<UserList />} />
+                        <Route  path='/' element={<UserList />} />
                     </Routes>
                 </Col>
             </Row>

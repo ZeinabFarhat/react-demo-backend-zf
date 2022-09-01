@@ -16,13 +16,13 @@ export default function EditPermission() {
     const [name, setName] = useState("")
     const [validationError, setValidationError] = useState({})
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchPermission()
-    },[])
+    }, [])
     const fetchPermission = async () => {
         await axios.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
             console.log(data);
-            const { name} = data
+            const {name} = data
             setName(name)
 
         }).catch(({response: {data}}) => {
@@ -34,7 +34,7 @@ export default function EditPermission() {
     }
 
 
-    const updatePermission = async (e) => {
+    const updatePermission = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         const formData = new FormData()
@@ -77,7 +77,7 @@ export default function EditPermission() {
                                                     <ul className="mb-0">
                                                         {
                                                             Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
+                                                                <li key={key}>+{value}</li>
                                                             ))
                                                         }
                                                     </ul>
@@ -99,7 +99,7 @@ export default function EditPermission() {
                                     </Row>
 
 
-                                    <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
                                         Update
                                     </Button>
                                 </Form>

@@ -7,6 +7,7 @@ import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
 export default function EditRole() {
 
  const navigate = useNavigate();
@@ -21,6 +22,44 @@ export default function EditRole() {
             id: item.id,
           }
     }));
+  };
+
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    console.log(value);
+
+    const filterdValue = value.filter(
+      (item) => permissions.findIndex((o) => o.id === item.id) >= 0
+    );
+
+    let duplicatesRemoved = value.filter((item, itemIndex) =>
+      value.findIndex((o, oIndex) => o.id === item.id && oIndex !== itemIndex)
+    );
+
+    // console.log(duplicatesRemoved);
+
+    // let map = {};
+
+    // for (let list of value) {
+    //   map[Object.values(list).join('')] = list;
+    // }
+    // console.log('Using Map', Object.values(map));
+
+    let duplicateRemoved = [];
+
+    value.forEach((item) => {
+      if (duplicateRemoved.findIndex((o) => o.id === item.id) >= 0) {
+        duplicateRemoved = duplicateRemoved.filter((x) => x.id === item.id);
+      } else {
+        duplicateRemoved.push(item);
+      }
+    });
+
+    setRolePermissions(duplicateRemoved);
   };
 
     const {id} = useParams()
@@ -164,7 +203,7 @@ export default function EditRole() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Button variant="primary" className="mt-2" size="sm" block="block" type="submit">
+                                    <Button className="mt-2" size="sm" block="block" type="submit">
                                                                             Update
                                                                         </Button>
                                 </Form>
@@ -186,11 +225,12 @@ export default function EditRole() {
 
                                   <input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />
                                   <Form.Label>{item.name}</Form.Label>
+
                                   </div>
                                   ); })}
                                   </div>
                                   </div>
-                                 <Button variant="primary" className="mt-2" size="sm" block="block" type="submit"> Update </Button>
+                                 <Button className="mt-2" size="sm" block="block" type="submit"> Update </Button>
                                  </div>
                                  </Row>
                             </Form>
