@@ -19,9 +19,12 @@ import RoleList from "./components/role/list.component";
 import CreateRole from "./components/role/create.component";
 import EditRole from "./components/role/edit.component";
 
+import Login from "./components/auth/login.component";
+
 
 function App() {
-    return (<Router>
+    return (
+        <Router>
         <Navbar bg="primary">
             <Container>
                 <Link to={"/permissions"} className="navbar-brand text-white">
@@ -33,6 +36,7 @@ function App() {
                 <Link to={"/"} className="navbar-brand text-white">
                 Users
             </Link>
+                <Link  to="/login" >LogIn</Link>
             </Container>
     </Navbar>
 
@@ -64,7 +68,16 @@ function App() {
                     </Routes>
                 </Col>
             </Row>
+
+            <Row>
+                <Col md={12}>
+                    <Routes>
+                        <Route  path='/login' element={<Login />} />
+                    </Routes>
+                </Col>
+            </Row>
         </Container>
+
     </Router>);
 }
 
