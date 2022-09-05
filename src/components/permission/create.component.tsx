@@ -12,7 +12,7 @@ export default function CreatePermission() {
     const [name, setName] = useState("")
     const [validationError, setValidationError] = useState({})
 
-    const createProduct = async (e) => {
+    async function createProduct(e: { preventDefault: () => void; }) {
         e.preventDefault();
 
         const formData = new FormData()
@@ -53,9 +53,9 @@ export default function CreatePermission() {
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
                                                         {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
-                                                            ))
+                                                            // Object.entries(validationError).map(([key, value]) => (
+                                                            //     <li key={key}>{value}</li>
+                                                            // ))
                                                         }
                                                     </ul>
                                                 </div>
@@ -75,7 +75,7 @@ export default function CreatePermission() {
                                         </Col>
                                     </Row>
 
-                                    <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
                                         Save
                                     </Button>
                                 </Form>

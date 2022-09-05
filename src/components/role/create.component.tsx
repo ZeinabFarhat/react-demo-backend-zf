@@ -15,7 +15,7 @@ export default function CreateRole() {
     const [validationError, setValidationError] = useState({})
 
 
-    const createRole = async (e) => {
+    const createRole = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         const formData = new FormData()
@@ -55,11 +55,7 @@ export default function CreateRole() {
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
-                                                        {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
-                                                            ))
-                                                        }
+                                                        {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -78,7 +74,7 @@ export default function CreateRole() {
                                         </Col>
                                     </Row>
 
-                                    <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
                                         Save
                                     </Button>
                                 </Form>

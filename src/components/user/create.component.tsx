@@ -29,17 +29,17 @@ export default function CreateProduct() {
 
         const API = await axios.get('http://user-laravel-project.test/api/roles')
         const serverResponse = API.data.data
-        const dropDownValue = serverResponse.map((response) => ({
+        const dropDownValue = serverResponse.map((response:  { [x: string]: any; }) => ({
             "value": response.id, "label": response.name
         }))
         setRoles(dropDownValue)
     }
 
-    const handleChange = (selectedOption) => {
+    const handleChange = (selectedOption:any) => {
         setarray(selectedOption)
     }
 
-    const createUser = async (e) => {
+    const createUser = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         const formData = new FormData()
@@ -66,7 +66,8 @@ export default function CreateProduct() {
         })
     }
 
-    return (<div className="container">
+    // @ts-ignore
+    return <div className="container">
         <div className="row justify-content-center">
             <div className="col-12 col-sm-12 col-md-6">
                 <div className="card">
@@ -74,15 +75,15 @@ export default function CreateProduct() {
                         <h4 className="card-title">Add User</h4>
                         <hr/>
                         <div className="form-wrapper">
-                            {Object.keys(validationError).length > 0 && (<div className="row">
+                            {Object.keys(validationError).length > 0 && <div className="row">
                                 <div className="col-12">
                                     <div className="alert alert-danger">
                                         <ul className="mb-0">
-                                            {Object.entries(validationError).map(([key, value]) => (<li key={key}>{value}</li>))}
+                                            {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
                                         </ul>
                                     </div>
                                 </div>
-                            </div>)}
+                            </div>}
                             <Form onSubmit={createUser}>
                                 <Row>
                                     <Col>
@@ -122,7 +123,7 @@ export default function CreateProduct() {
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
+                                <Button variant="primary" className="mt-2" size="lg"  type="submit">
                                     Save
                                 </Button>
                             </Form>
@@ -131,5 +132,5 @@ export default function CreateProduct() {
                 </div>
             </div>
         </div>
-    </div>)
+    </div>
 }

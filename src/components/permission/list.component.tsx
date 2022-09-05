@@ -19,7 +19,7 @@ export default function List() {
         })
     }
 
-    const deleteProduct = async (id) => {
+    const deleteProduct = async (id: any) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -71,7 +71,7 @@ export default function List() {
                                 <tbody>
                                 {
                                     permissions.length > 0 && (
-                                        permissions.map((row, key) => (
+                                        permissions.map((row: { [x: string]: any; }, key) => (
                                             <tr key={key}>
                                                 <td>{row.name}</td>
                                                 <td>

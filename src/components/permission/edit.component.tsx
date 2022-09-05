@@ -76,9 +76,9 @@ export default function EditPermission() {
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
                                                         {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>+{value}</li>
-                                                            ))
+                                                            // Object.entries(validationError).map(([key, value]) => (
+                                                            //     <li key={key}>+{value}</li>
+                                                            // ))
                                                         }
                                                     </ul>
                                                 </div>

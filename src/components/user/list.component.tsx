@@ -19,7 +19,7 @@ export default function List() {
         })
     }
 
-    const deleteUser = async (id) => {
+    const deleteUser = async (id: any) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -73,11 +73,12 @@ export default function List() {
                                 <tbody>
                                 {
                                     users.length > 0 && (
-                                        users.map((row, key) => (
+                                        users.map((row: { [x: string]: any; }, key) => (
+
                                             <tr key={key}>
                                                 <td>{row['name']}</td>
                                                 <td>{row['email']}</td>
-                                                <td>{row['roles'].map((row,key)=>(
+                                                <td>{row['roles'].map((row: { [x: string]: any; }, key: any)=>(
                                                         row['name']
                                                     ))}
                                                 </td>
@@ -86,7 +87,9 @@ export default function List() {
                                                     <Link to={`/user/edit/${row.id}`} className='btn btn-success me-2'>
                                                         Edit
                                                     </Link>
-                                                    <Button variant="danger" onClick={() => deleteUser(row.id)}>
+                                                    <Button variant="danger" onClick={() => {
+                                                        return deleteUser(row.id);
+                                                    }}>
                                                         Delete
                                                     </Button>
                                                 </td>

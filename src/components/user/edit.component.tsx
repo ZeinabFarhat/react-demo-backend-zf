@@ -28,7 +28,7 @@ export default function EditUser() {
         console.log(newarray);
     },[newarray])
 
-      const  handleChange = (selectedOption) => {
+      const  handleChange = (selectedOption:any) => {
             setarray(selectedOption)
             console.log("changed")
 
@@ -38,7 +38,7 @@ export default function EditUser() {
 
                 const API = await axios.get('http://user-laravel-project.test/api/roles')
                 const serverResponse = API.data.data
-                const dropDownValue = serverResponse.map((response) => ({
+                const dropDownValue = serverResponse.map((response: { [x: string]: any; }) => ({
                     "value" : response.id,
                     "label" : response.name
                 }))
@@ -50,7 +50,7 @@ export default function EditUser() {
         const API = await axios.get(`http://user-laravel-project.test/api/users/${id}`)
 
           const serverResponse = API.data.data['roles']
-                const dropDownValue = serverResponse.map((response) => ({
+                const dropDownValue = serverResponse.map((response: { [x: string]: any; }) => ({
                     "value" : response.id,
                     "label" : response.name
                 }))
@@ -63,7 +63,7 @@ export default function EditUser() {
         setRoles(dropDownValue)
     }
 
-    const updateUser = async (e) => {
+    const updateUser = async (e: { preventDefault: () => void; }) => {
 
         e.preventDefault();
         const formData = new FormData()
@@ -107,11 +107,9 @@ export default function EditUser() {
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
-                                                        {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
-                                                            ))
-                                                        }
+                                                        <ul className="mb-0">
+                                                            {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
+                                                        </ul>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -158,7 +156,7 @@ export default function EditUser() {
                                                                           </Form.Group>
                                                                       </Col>
                                                                   </Row>
-                                    <Button variant="primary" className="mt-2" size="lg" block="block" type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
                                         Update
                                     </Button>
                                 </Form>

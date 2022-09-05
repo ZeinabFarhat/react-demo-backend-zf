@@ -19,7 +19,7 @@ export default function List() {
         })
     }
 
-    const deleteRole = async (id) => {
+    const deleteRole = async (id: any) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -71,7 +71,7 @@ export default function List() {
                                 <tbody>
                                 {
                                     roles.length > 0 && (
-                                        roles.map((row, key) => (
+                                        roles.map((row :  { [x: string]: any; }, key) => (
                                             <tr key={key}>
                                                 <td>{row.name}</td>
                                                 <td>

@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import { BrowserRouter as Router , Routes, Route, Link } from "react-router-dom";
 
-import EditUser from "./components/user/edit.component.js";
+import EditUser from "./components/user/edit.component";
 import UserList from "./components/user/list.component";
 import CreateUser from "./components/user/create.component";
 

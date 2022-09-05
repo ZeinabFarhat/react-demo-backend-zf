@@ -13,8 +13,9 @@ export default function EditRole() {
  const navigate = useNavigate();
  const [checkedPermissions, setPermissions] = useState({});
 
-  const toggleHandler = (item) => () => {
-    setPermissions((state) => ({
+  const toggleHandler = (item: { [p: string]: any }) => () => {
+
+      setPermissions((state:[]) => ({
       ...state,
       [item.id]: state[item.id]
         ? null
@@ -25,35 +26,27 @@ export default function EditRole() {
   };
 
 
-  const handleChange = (event) => {
+  const HandleChange = (event: { target: { value: any; }; }) => {
     const {
       target: { value },
     } = event;
 
-    console.log(value);
+
 
     const filterdValue = value.filter(
-      (item) => permissions.findIndex((o) => o.id === item.id) >= 0
+      (item: { id: any[]; }) => permissions.findIndex((o:any) => o.id === item.id) >= 0
     );
 
-    let duplicatesRemoved = value.filter((item, itemIndex) =>
-      value.findIndex((o, oIndex) => o.id === item.id && oIndex !== itemIndex)
+    let duplicatesRemoved = value.filter((item: { id: any; }, itemIndex: any) =>
+      value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
     );
 
-    // console.log(duplicatesRemoved);
+      let [duplicateRemoved] =useState<string[]>([]);
+      // let duplicateRemoved = [];
 
-    // let map = {};
-
-    // for (let list of value) {
-    //   map[Object.values(list).join('')] = list;
-    // }
-    // console.log('Using Map', Object.values(map));
-
-    let duplicateRemoved = [];
-
-    value.forEach((item) => {
-      if (duplicateRemoved.findIndex((o) => o.id === item.id) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x) => x.id === item.id);
+    value.forEach((item:any) => {
+      if (duplicateRemoved.findIndex((o:any) => o.id === item.id) >= 0) {
+        duplicateRemoved = duplicateRemoved.filter((x:any) => x.id === item.id);
       } else {
         duplicateRemoved.push(item);
       }
@@ -67,7 +60,7 @@ export default function EditRole() {
   const [permissionsData, setProducts] = useState([])
 
     const [name, setName] = useState("")
-     const [permissions, setRolePermissions] = useState("")
+     const [permissions, setRolePermissions] = useState<string[]>([]);
     const [validationError, setValidationError] = useState({})
 
     useEffect(()=>{
@@ -82,9 +75,9 @@ export default function EditRole() {
             })
         }
 
-          const addPermissions = async (permissions) => {
+          const addPermissions = async (permissions: any[]) => {
                 permissions.map((item) =>
-                 setPermissions((state) => ({
+                 setPermissions((state:any) => ({
                       ...state,
                       [item.id]: state[item.id]
                         = {
@@ -113,7 +106,7 @@ export default function EditRole() {
     }
 
 
-    const updateRole = async (e) => {
+    const updateRole = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
         const formData = new FormData()
@@ -139,7 +132,7 @@ export default function EditRole() {
         })
     }
 
-   const updateRolePermissions = async (e) => {
+   const updateRolePermissions = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
 
@@ -181,11 +174,7 @@ export default function EditRole() {
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
-                                                        {
-                                                            Object.entries(validationError).map(([key, value]) => (
-                                                                <li key={key}>{value}</li>
-                                                            ))
-                                                        }
+                                                        {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -203,7 +192,7 @@ export default function EditRole() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Button className="mt-2" size="sm" block="block" type="submit">
+                                    <Button className="mt-2" size="sm"  type="submit">
                                                                             Update
                                                                         </Button>
                                 </Form>
@@ -214,8 +203,9 @@ export default function EditRole() {
                                     <div className="card card-body">
                                     <Form.Label>Permissions</Form.Label>
                                     <div className="table-responsive">
-                                    {permissionsData.map((item) => {
-                                         return (
+                                    {permissionsData.map((item: { [x: string]: any; }) => {
+
+                                        return (
                                                   <div
                                                      key={item.id}
                                                      style={{
@@ -223,14 +213,14 @@ export default function EditRole() {
                                                       width: "150px"
                                                }} >
 
-                                  <input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />
+                                  {/*<input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />*/}
                                   <Form.Label>{item.name}</Form.Label>
 
                                   </div>
                                   ); })}
                                   </div>
                                   </div>
-                                 <Button className="mt-2" size="sm" block="block" type="submit"> Update </Button>
+                                 <Button className="mt-2" size="sm"  type="submit"> Update </Button>
                                  </div>
                                  </Row>
                             </Form>
