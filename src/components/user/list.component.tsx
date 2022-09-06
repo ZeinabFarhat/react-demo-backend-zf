@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import{ token} from "../auth/login.component";
 
 
 export default function List() {
@@ -14,7 +15,10 @@ export default function List() {
     }, [])
 
     const fetchUsers = async () => {
-        await axios.get(`http://user-laravel-project.test/api/users`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.get(`http://user-laravel-project.test/api/users`).then(({data}) => {
             setUsers(data.data);
         })
     }

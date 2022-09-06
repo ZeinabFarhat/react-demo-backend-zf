@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import{ token} from "../auth/login.component";
 
 export default function EditPermission() {
     const navigate = useNavigate();
@@ -20,7 +21,10 @@ export default function EditPermission() {
         fetchPermission()
     }, [])
     const fetchPermission = async () => {
-        await axios.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
             console.log(data);
             const {name} = data
             setName(name)
@@ -42,7 +46,11 @@ export default function EditPermission() {
         formData.append('_method', 'PUT');
         formData.append('name', name)
 
-        await axios.post(`http://user-laravel-project.test/api/permissions/${id}`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+        await instance.post(`http://user-laravel-project.test/api/permissions/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message

@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
+import{ token} from "../auth/login.component";
 
 export default function CreatePermission() {
     const navigate = useNavigate();
@@ -16,10 +17,13 @@ export default function CreatePermission() {
         e.preventDefault();
 
         const formData = new FormData()
-
         formData.append('name', name)
 
-        await axios.post(`http://user-laravel-project.test/api/permissions`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+        await instance.post(`http://user-laravel-project.test/api/permissions`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message

@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import{ token} from "../auth/login.component";
 
 export default function EditRole() {
 
@@ -69,7 +69,10 @@ export default function EditRole() {
     },[checkedPermissions])
 
       const fetchProducts = async () => {
-            await axios.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
+          const instance = axios.create({
+              headers: {'Authorization': 'Bearer '+ token}
+          });
+            await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
                 console.log(data)
                 setProducts(data.data)
             })
@@ -87,7 +90,10 @@ export default function EditRole() {
 
 
     const fetchRole = async () => {
-        await axios.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
 
             const { name} = data.data
             const {permissions} = data.data
@@ -114,7 +120,10 @@ export default function EditRole() {
         formData.append('_method', 'PUT');
         formData.append('name', name)
 
-        await axios.post(`http://user-laravel-project.test/api/roles/${id}`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.post(`http://user-laravel-project.test/api/roles/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message
@@ -140,7 +149,10 @@ export default function EditRole() {
         console.log( JSON.stringify(permissions));
         formData.append('permissions', JSON.stringify(permissions))
 
-        await axios.post(`http://user-laravel-project.test/api/role/permission/${id}`, formData).then(({data}) => {
+       const instance = axios.create({
+           headers: {'Authorization': 'Bearer '+ token}
+       });
+        await instance.post(`http://user-laravel-project.test/api/role/permission/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message

@@ -8,6 +8,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import{ token} from "../auth/login.component";
 
 export default function EditUser() {
     const navigate = useNavigate();
@@ -35,8 +36,11 @@ export default function EditUser() {
         }
 
          const fetchRoles = async () => {
+             const instance = axios.create({
+                 headers: {'Authorization': 'Bearer '+ token}
+             });
 
-                const API = await axios.get('http://user-laravel-project.test/api/roles')
+                const API = await instance.get('http://user-laravel-project.test/api/roles')
                 const serverResponse = API.data.data
                 const dropDownValue = serverResponse.map((response: { [x: string]: any; }) => ({
                     "value" : response.id,
@@ -47,7 +51,11 @@ export default function EditUser() {
             }
 
     const fetchUser = async () => {
-        const API = await axios.get(`http://user-laravel-project.test/api/users/${id}`)
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+        const API = await instance.get(`http://user-laravel-project.test/api/users/${id}`)
 
           const serverResponse = API.data.data['roles']
                 const dropDownValue = serverResponse.map((response: { [x: string]: any; }) => ({
@@ -74,7 +82,10 @@ export default function EditUser() {
         formData.append('email', email)
         formData.append('roles', JSON.stringify(newarray))
 
-        await axios.post(`http://user-laravel-project.test/api/users/${id}`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.post(`http://user-laravel-project.test/api/users/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message

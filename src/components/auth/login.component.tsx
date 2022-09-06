@@ -3,10 +3,14 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 import {useNavigate} from 'react-router-dom'
 
+
+export var token='';
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
     const [validationError, setValidationError] = useState({});
     const handleSubmit = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -19,6 +23,9 @@ const Login = () => {
                 icon: "success",
                 text: data.message
             })
+
+           token = data.token;
+
             navigate("/")
         }).catch(({response}) => {
             if (response.status === 422) {

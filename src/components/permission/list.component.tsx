@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import{ token} from "../auth/login.component";
 
 export default function List() {
 
@@ -13,7 +14,11 @@ export default function List() {
     }, [])
 
     const fetchProducts = async () => {
-        await axios.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+        await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
             console.log(data)
             setProducts(data.data)
         })
@@ -36,7 +41,11 @@ export default function List() {
             return;
         }
 
-        await axios.delete(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+        await instance.delete(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message

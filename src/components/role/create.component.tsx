@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
+import{ token} from "../auth/login.component";
 
 export default function CreateRole() {
     const navigate = useNavigate();
@@ -22,7 +23,10 @@ export default function CreateRole() {
 
         formData.append('name', name)
 
-        await axios.post(`http://user-laravel-project.test/api/roles`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.post(`http://user-laravel-project.test/api/roles`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message
