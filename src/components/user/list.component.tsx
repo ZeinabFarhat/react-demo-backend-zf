@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import{ token} from "../auth/login.component";
+
 
 
 export default function List() {
-
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const [users, setUsers] = useState([])
 
     useEffect(() => {
@@ -40,7 +40,12 @@ export default function List() {
             return;
         }
 
-        await axios.delete(`http://user-laravel-project.test/api/users/${id}`).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+
+
+        await instance.delete(`http://user-laravel-project.test/api/users/${id}`).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message
@@ -82,7 +87,7 @@ export default function List() {
                                             <tr key={key}>
                                                 <td>{row['name']}</td>
                                                 <td>{row['email']}</td>
-                                                <td>{row['roles'].map((row: { [x: string]: any; }, key: any)=>(
+                                                <td>{row['roles'].map((row: { [x: string]: any; })=>(
                                                         row['name']
                                                     ))}
                                                 </td>
@@ -91,9 +96,7 @@ export default function List() {
                                                     <Link to={`/user/edit/${row.id}`} className='btn btn-success me-2'>
                                                         Edit
                                                     </Link>
-                                                    <Button variant="danger" onClick={() => {
-                                                        return deleteUser(row.id);
-                                                    }}>
+                                                    <Button variant="danger" onClick={() => deleteUser(row.id)}>
                                                         Delete
                                                     </Button>
                                                 </td>

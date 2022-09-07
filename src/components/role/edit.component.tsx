@@ -6,7 +6,6 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import {token} from "../auth/login.component";
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
@@ -26,12 +25,11 @@ export default function EditRole() {
             },
         },
     };
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const handleChange = (event: { target: { value: any; }; }) => {
         const {
             target: {value},
         } = event;
-
-        console.log(value);
 
         const filterdValue = value.filter(
             (item: { id: any; }) => permissions.findIndex((o: any) => o.id === item.id) >= 0
@@ -75,7 +73,6 @@ export default function EditRole() {
             headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
-            console.log(data)
             setProducts(data.data)
         })
     }
@@ -134,7 +131,6 @@ export default function EditRole() {
         const formData = new FormData()
 
         formData.append('_method', 'PUT');
-        console.log(JSON.stringify(permissions));
         formData.append('permissions', JSON.stringify(permissions))
 
         const instance = axios.create({

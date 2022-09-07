@@ -6,10 +6,10 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
-import{ token} from "../auth/login.component";
 
 export default function CreateRole() {
     const navigate = useNavigate();
+    const token =  JSON.parse(localStorage.getItem('token') as string );
 
     const [name, setName] = useState("")
 

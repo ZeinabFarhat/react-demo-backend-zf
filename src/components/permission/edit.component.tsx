@@ -6,14 +6,12 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import{ token} from "../auth/login.component";
+
 
 export default function EditPermission() {
     const navigate = useNavigate();
-
     const {id} = useParams()
-
-
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const [name, setName] = useState("")
     const [validationError, setValidationError] = useState({})
 
@@ -25,10 +23,8 @@ export default function EditPermission() {
             headers: {'Authorization': 'Bearer '+ token}
         });
         await instance.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
-            console.log(data);
             const {name} = data
             setName(name)
-
         }).catch(({response: {data}}) => {
             Swal.fire({
                 text: data.message,

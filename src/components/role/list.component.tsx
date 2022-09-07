@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import{ token} from "../auth/login.component";
+
 
 export default function List() {
-
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const [roles, setRoles] = useState([])
 
     useEffect(() => {

@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import{ token} from "../auth/login.component";
+
 
 export default function List() {
 
     const [permissions, setProducts] = useState([])
+    const token =  JSON.parse(localStorage.getItem('token') as string );
 
     useEffect(() => {
         fetchProducts()
@@ -19,7 +20,6 @@ export default function List() {
         });
 
         await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
-            console.log(data)
             setProducts(data.data)
         })
     }

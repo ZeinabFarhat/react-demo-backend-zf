@@ -6,7 +6,6 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
-import {token} from "../auth/login.component";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
@@ -16,7 +15,7 @@ import Select from '@mui/material/Select';
 
 export default function CreateProduct() {
     const navigate = useNavigate();
-
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")

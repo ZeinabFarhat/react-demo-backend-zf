@@ -27,20 +27,29 @@ import Login from "./components/auth/login.component";
 function App() {
 
     const [isAuthenticated, setIsAuthenticated] = useState(
-        () =>  false
+        () => JSON.parse(localStorage.getItem('auth') as string) || false
     );
-
+    const [token, setExistToken] = useState(
+        () => JSON.parse(localStorage.getItem('token') as string) || false
+    );
   const setAuth = (value: any) => {
         setIsAuthenticated(value);
         //alert(value);
     };
 
+    const setToken = (value: any) => {
+        setExistToken(value);
+        //alert(value);
+    };
+
     useEffect(()=>{
         localStorage.setItem("auth", JSON.stringify(isAuthenticated));
-    }, [isAuthenticated]);
+        localStorage.setItem("token", JSON.stringify(token));
+    }, [isAuthenticated,token]);
 
 
     console.log(JSON.parse(localStorage.getItem('auth') as string ));
+    console.log(JSON.parse(localStorage.getItem('token') as string ));
 ;
     return (
         <Router>
@@ -109,7 +118,7 @@ function App() {
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route  path='/login' element={<Login setAuth={setAuth} />} />
+                        <Route  path='/login' element={<Login setAuth={setAuth} setToken={setToken} />} />
                     </Routes>
                 </Col>
             </Row>

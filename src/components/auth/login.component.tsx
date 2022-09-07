@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom'
 export var token='';
 
 // @ts-ignore
-const Login = ({setAuth}) => {
+const Login = ({setAuth,setToken}) => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -27,7 +27,7 @@ const Login = ({setAuth}) => {
 
            token = data.token;
             setAuth(true);
-            console.log('here');
+            setToken(token);
             navigate("/")
         }).catch(({response}) => {
             if (response.status === 422) {

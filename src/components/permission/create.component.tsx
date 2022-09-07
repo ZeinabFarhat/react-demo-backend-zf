@@ -6,13 +6,12 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
-import{ token} from "../auth/login.component";
 
 export default function CreatePermission() {
     const navigate = useNavigate();
     const [name, setName] = useState("")
     const [validationError, setValidationError] = useState({})
-
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     async function createProduct(e: { preventDefault: () => void; }) {
         e.preventDefault();
 

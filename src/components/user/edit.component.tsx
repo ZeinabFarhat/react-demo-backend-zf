@@ -6,8 +6,6 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import makeAnimated from 'react-select/animated';
-import{ token} from "../auth/login.component";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
@@ -17,8 +15,8 @@ import Select from '@mui/material/Select';
 export default function EditUser() {
     const navigate = useNavigate();
     const {id} = useParams()
-    const animatedComponents = makeAnimated();
 
+    const token =  JSON.parse(localStorage.getItem('token') as string );
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
