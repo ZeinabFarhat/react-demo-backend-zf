@@ -16,11 +16,11 @@ export default function EditUser() {
     const navigate = useNavigate();
     const {id} = useParams()
 
-    const token =  JSON.parse(localStorage.getItem('token') as string );
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-     const [roles, setRoles] = useState([])
+    const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
     const [userRoles, setUserRoles] = useState([])
 
@@ -35,16 +35,16 @@ export default function EditUser() {
         },
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchUser();
         fetchRoles();
 
-    },[])
+    }, [])
 
-    let handleChange = (event:  any) => {
+    let handleChange = (event: any) => {
         const {
             target: {value},
-        }= event;
+        } = event;
 
         const filterdValue = value.filter(
             (item: { id: any; }) => userRoles.findIndex((o: any) => o.id === item.id) >= 0
@@ -55,10 +55,12 @@ export default function EditUser() {
         );
 
         let duplicateRemoved: any[] = [];
+
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
                 // @ts-ignore
-                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id === item.id);
+                duplicateRemoved = duplicateRemoved.filter((x) => x.id !== item.id);
+
             } else {
                 duplicateRemoved.push(item);
             }
@@ -68,25 +70,25 @@ export default function EditUser() {
         setUserRoles(duplicateRemoved);
     };
 
-         const fetchRoles = async () => {
-             const instance = axios.create({
-                 headers: {'Authorization': 'Bearer '+ token}
-             });
+    const fetchRoles = async () => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer ' + token}
+        });
 
-                const API = await instance.get('http://user-laravel-project.test/api/roles')
-                const roles = API.data.data
+        const API = await instance.get('http://user-laravel-project.test/api/roles')
+        const roles = API.data.data
 
-                setRoles(roles)
-            }
+        setRoles(roles)
+    }
 
     const fetchUser = async () => {
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
         const API = await instance.get(`http://user-laravel-project.test/api/users/${id}`)
         const serverResponse = API.data.data['roles']
-        const { name,password,email} = API.data.data
+        const {name, password, email} = API.data.data
 
         setUserRoles(serverResponse)
         setName(name)
@@ -106,7 +108,7 @@ export default function EditUser() {
         formData.append('roles', JSON.stringify(userRoles))
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.post(`http://user-laravel-project.test/api/users/${id}`, formData).then(({data}) => {
             Swal.fire({
@@ -142,7 +144,7 @@ export default function EditUser() {
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
                                                         <ul className="mb-0">
-                                                            {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
+                                                            {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (<li>{value}</li>))}
                                                         </ul>
                                                     </ul>
                                                 </div>
@@ -165,7 +167,7 @@ export default function EditUser() {
                                         <Col>
                                             <Form.Group controlId="Password">
                                                 <Form.Label>Password</Form.Label>
-                                                <Form.Control type="password" value={password}  required onChange={(event) => {
+                                                <Form.Control type="password" value={password} required onChange={(event) => {
                                                     setPassword(event.target.value)
                                                 }}/>
                                             </Form.Group>
@@ -181,29 +183,29 @@ export default function EditUser() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                 <Row className="my-3">
-                                          <Col>
-                                           <Form.Group controlId="Roles">
-                                                       <Form.Label>Roles</Form.Label>
-                                               <div className="table-responsive">
-                                                   <Select labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
-                                                           input={<OutlinedInput label="Tag"/>} renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')} MenuProps={MenuProps}>
-                                                       {roles.map((variant: any) => (
-                                                           <MenuItem key={variant.id} value={variant}>
-                                                               <Checkbox
-                                                                   checked={
-                                                                       userRoles.findIndex((item: any) => item.id === variant.id) >= 0
-                                                                   }
-                                                               />
-                                                               <ListItemText primary={variant.name}/>
-                                                           </MenuItem>
-                                                       ))}
-                                                   </Select>
-                                               </div>
-                                                                          </Form.Group>
-                                                                      </Col>
-                                                                  </Row>
-                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
+                                    <Row className="my-3">
+                                        <Col>
+                                            <Form.Group controlId="Roles">
+                                                <Form.Label>Roles</Form.Label>
+                                                <div className="table-responsive">
+                                                    <Select className="w-100" labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
+                                                            input={<OutlinedInput label="Tag"/>} renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')} MenuProps={MenuProps}>
+                                                        {roles.map((variant: any) => (
+                                                            <MenuItem key={variant.id} value={variant}>
+                                                                <Checkbox
+                                                                    checked={
+                                                                        userRoles.findIndex((item: any) => item.id === variant.id) >= 0
+                                                                    }
+                                                                />
+                                                                <ListItemText primary={variant.name}/>
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </div>
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+                                    <Button variant="primary" className="mt-2" size="lg" type="submit">
                                         Update
                                     </Button>
                                 </Form>

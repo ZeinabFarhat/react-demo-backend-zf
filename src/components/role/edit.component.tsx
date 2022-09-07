@@ -45,7 +45,7 @@ export default function EditRole() {
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
                 // @ts-ignore
-                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id === item.id);
+                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id !== item.id);
             } else {
                 duplicateRemoved.push(item);
             }

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 
 export default function List() {
     const token =  JSON.parse(localStorage.getItem('token') as string );
+
     const [users, setUsers] = useState([])
 
     useEffect(() => {
@@ -15,9 +16,11 @@ export default function List() {
     }, [])
 
     const fetchUsers = async () => {
+
         const instance = axios.create({
             headers: {'Authorization': 'Bearer '+ token}
         });
+
         await instance.get(`http://user-laravel-project.test/api/users`).then(({data}) => {
             setUsers(data.data);
         })

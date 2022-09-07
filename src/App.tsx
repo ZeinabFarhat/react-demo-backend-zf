@@ -34,12 +34,10 @@ function App() {
     );
   const setAuth = (value: any) => {
         setIsAuthenticated(value);
-        //alert(value);
     };
 
     const setToken = (value: any) => {
         setExistToken(value);
-        //alert(value);
     };
 
     useEffect(()=>{
@@ -47,10 +45,6 @@ function App() {
         localStorage.setItem("token", JSON.stringify(token));
     }, [isAuthenticated,token]);
 
-
-    console.log(JSON.parse(localStorage.getItem('auth') as string ));
-    console.log(JSON.parse(localStorage.getItem('token') as string ));
-;
     return (
         <Router>
         <Navbar bg="primary">
@@ -64,7 +58,7 @@ function App() {
                 <Link to={"/"} className="navbar-brand text-white">
                 Users
             </Link>
-                <Link  to="/login" >LogIn</Link>
+                <Link  className="navbar-brand text-white" to="/login" >LogIn</Link>
             </Container>
     </Navbar>
 
