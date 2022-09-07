@@ -55,7 +55,7 @@ export default function EditPermission() {
                 icon: "success",
                 text: data.message
             })
-            navigate("/")
+            navigate("/permissions")
         }).catch(({response}) => {
             if (response.status === 422) {
                 setValidationError(response.data.errors)

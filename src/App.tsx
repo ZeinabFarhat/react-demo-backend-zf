@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "bootstrap/dist/css/bootstrap.css";
+import { Navigate } from 'react-router-dom';
+import  {useEffect, useState} from "react";
 
 import { BrowserRouter as Router , Routes, Route, Link } from "react-router-dom";
 
@@ -23,6 +25,23 @@ import Login from "./components/auth/login.component";
 
 
 function App() {
+
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        () =>  false
+    );
+
+  const setAuth = (value: any) => {
+        setIsAuthenticated(value);
+        //alert(value);
+    };
+
+    useEffect(()=>{
+        localStorage.setItem("auth", JSON.stringify(isAuthenticated));
+    }, [isAuthenticated]);
+
+
+    console.log(JSON.parse(localStorage.getItem('auth') as string ));
+;
     return (
         <Router>
         <Navbar bg="primary">
@@ -44,27 +63,45 @@ function App() {
             <Row>
             <Col md={12}>
                 <Routes>
-                    <Route  path='/permissions' element={<PermissionList />} />
-                    <Route path="/permission/create" element={<CreatePermission />} />
-                    <Route path="/permission/edit/:id" element={<EditPermission />} />
+                    <Route  path='/permissions'     element={isAuthenticated
+                        ? <PermissionList  />
+                        : <Navigate to="/login" replace />}/>
+                    <Route path="/permission/create"   element={isAuthenticated
+                        ? <CreatePermission  />
+                        : <Navigate to="/login" replace />}/>
+                    <Route path="/permission/edit/:id"  element={isAuthenticated
+                        ? <EditPermission  />
+                        : <Navigate to="/login" replace />}/>
                 </Routes>
             </Col>
         </Row>
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route  path='/roles' element={<RoleList />} />
-                        <Route path="/role/create" element={<CreateRole/>} />
-                        <Route path="/role/edit/:id" element={<EditRole />} />
+                        <Route  path='/roles'   element={isAuthenticated
+                            ? <RoleList  />
+                            : <Navigate to="/login" replace />}/>
+                        <Route path="/role/create"  element={isAuthenticated
+                            ? <CreateRole  />
+                            : <Navigate to="/login" replace />}/>
+                        <Route path="/role/edit/:id"  element={isAuthenticated
+                            ? <EditRole  />
+                            : <Navigate to="/login" replace />}/>
                     </Routes>
                 </Col>
             </Row>
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route path="/user/create" element={<CreateUser />} />
-                        <Route path="/user/edit/:id" element={<EditUser />} />
-                        <Route  path='/' element={<UserList />} />
+                        <Route path="/user/create"  element={isAuthenticated
+                            ? <CreateUser  />
+                            : <Navigate to="/login" replace />}/>
+                        <Route path="/user/edit/:id" element={isAuthenticated
+                            ? <EditUser  />
+                            : <Navigate to="/login" replace />}/>
+                        <Route  path='/'  element={isAuthenticated
+                            ? <UserList  />
+                            : <Navigate to="/login" replace />}/>
                     </Routes>
                 </Col>
             </Row>
@@ -72,12 +109,11 @@ function App() {
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route  path='/login' element={<Login />} />
+                        <Route  path='/login' element={<Login setAuth={setAuth} />} />
                     </Routes>
                 </Col>
             </Row>
         </Container>
-
     </Router>);
 }
 

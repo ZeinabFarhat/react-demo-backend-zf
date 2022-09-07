@@ -31,7 +31,7 @@ export default function CreateRole() {
                 icon: "success",
                 text: data.message
             })
-            navigate("/")
+            navigate("/roles")
         }).catch(({response}) => {
             if (response.status === 422) {
                 setValidationError(response.data.errors)

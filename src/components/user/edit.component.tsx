@@ -31,8 +31,6 @@ export default function EditUser() {
 
       const  handleChange = (selectedOption:any) => {
             setarray(selectedOption)
-            console.log("changed")
-
         }
 
          const fetchRoles = async () => {

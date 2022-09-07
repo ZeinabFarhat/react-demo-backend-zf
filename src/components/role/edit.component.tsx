@@ -97,11 +97,9 @@ export default function EditRole() {
 
             const { name} = data.data
             const {permissions} = data.data
-            console.log(permissions)
             setRolePermissions(permissions)
             setName(name)
             addPermissions(permissions)
-            console.log(checkedPermissions)
 
         }).catch(({response: {data}}) => {
             Swal.fire({
@@ -128,7 +126,7 @@ export default function EditRole() {
                 icon: "success",
                 text: data.message
             })
-            navigate(`/role/edit/${id}`)
+            navigate(`/roles`)
         }).catch(({response}) => {
             if (response.status === 422) {
                 setValidationError(response.data.errors)

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import {token} from "../auth/login.component";
 
 export default function CreateProduct() {
     const navigate = useNavigate();
@@ -26,8 +27,10 @@ export default function CreateProduct() {
 
 
     const fetchRoles = async () => {
-
-        const API = await axios.get('http://user-laravel-project.test/api/roles')
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        const API = await instance.get('http://user-laravel-project.test/api/roles')
         const serverResponse = API.data.data
         const dropDownValue = serverResponse.map((response:  { [x: string]: any; }) => ({
             "value": response.id, "label": response.name
@@ -49,8 +52,10 @@ export default function CreateProduct() {
         formData.append('email', email)
         console.log(newarray)
         formData.append('roles', JSON.stringify(newarray))
-
-        await axios.post(`http://user-laravel-project.test/api/users`, formData).then(({data}) => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer '+ token}
+        });
+        await instance.post(`http://user-laravel-project.test/api/users`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success", text: data.message
             })
