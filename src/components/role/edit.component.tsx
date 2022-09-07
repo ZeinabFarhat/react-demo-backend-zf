@@ -6,100 +6,91 @@ import Col from 'react-bootstrap/Col';
 import {useNavigate, useParams} from 'react-router-dom'
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import{ token} from "../auth/login.component";
+import {token} from "../auth/login.component";
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 export default function EditRole() {
 
- const navigate = useNavigate();
- const [checkedPermissions, setPermissions] = useState({});
+    const navigate = useNavigate();
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+    const handleChange = (event: { target: { value: any; }; }) => {
+        const {
+            target: {value},
+        } = event;
 
-  const toggleHandler = (item: { [p: string]: any }) => () => {
+        console.log(value);
 
-      setPermissions((state:[]) => ({
-      ...state,
-      [item.id]: state[item.id]
-        ? null
-        : {
-            id: item.id,
-          }
-    }));
-  };
+        const filterdValue = value.filter(
+            (item: { id: any; }) => permissions.findIndex((o: any) => o.id === item.id) >= 0
+        );
+
+        let duplicatesRemoved = value.filter((item: { id: any; }, itemIndex: any) =>
+            value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
+        );
 
 
-  const HandleChange = (event: { target: { value: any; }; }) => {
-    const {
-      target: { value },
-    } = event;
+        // let duplicateRemoved: any[]  ;
+        let duplicateRemoved: any[] = [];
+        value.forEach((item: any) => {
+            if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
+                // @ts-ignore
+                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id === item.id);
+            } else {
+                duplicateRemoved.push(item);
+            }
+        });
 
-
-
-    const filterdValue = value.filter(
-      (item: { id: any[]; }) => permissions.findIndex((o:any) => o.id === item.id) >= 0
-    );
-
-    let duplicatesRemoved = value.filter((item: { id: any; }, itemIndex: any) =>
-      value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
-    );
-
-      let [duplicateRemoved] =useState<string[]>([]);
-      // let duplicateRemoved = [];
-
-    value.forEach((item:any) => {
-      if (duplicateRemoved.findIndex((o:any) => o.id === item.id) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x:any) => x.id === item.id);
-      } else {
-        duplicateRemoved.push(item);
-      }
-    });
-
-    setRolePermissions(duplicateRemoved);
-  };
+        // @ts-ignore
+        setRolePermissions(duplicateRemoved);
+    };
 
     const {id} = useParams()
 
-  const [permissionsData, setProducts] = useState([])
+    const [permissionsData, setProducts] = useState([])
 
     const [name, setName] = useState("")
-     const [permissions, setRolePermissions] = useState<string[]>([]);
+    const [permissions, setRolePermissions] = useState<string[]>([]);
     const [validationError, setValidationError] = useState({})
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchRole();
         fetchProducts();
-    },[checkedPermissions])
+    }, [])
 
-      const fetchProducts = async () => {
-          const instance = axios.create({
-              headers: {'Authorization': 'Bearer '+ token}
-          });
-            await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
-                console.log(data)
-                setProducts(data.data)
-            })
-        }
-
-          const addPermissions = async (permissions: any[]) => {
-                permissions.map((item) =>
-                 setPermissions((state:any) => ({
-                      ...state,
-                      [item.id]: state[item.id]
-                        = {
-                            id: item.id,
-                          }
-                    })))  }
+    const fetchProducts = async () => {
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer ' + token}
+        });
+        await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
+            console.log(data)
+            setProducts(data.data)
+        })
+    }
 
 
     const fetchRole = async () => {
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
 
-            const { name} = data.data
+            const {name} = data.data
             const {permissions} = data.data
             setRolePermissions(permissions)
             setName(name)
-            addPermissions(permissions)
 
         }).catch(({response: {data}}) => {
             Swal.fire({
@@ -108,7 +99,6 @@ export default function EditRole() {
             })
         })
     }
-
 
     const updateRole = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -119,7 +109,7 @@ export default function EditRole() {
         formData.append('name', name)
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.post(`http://user-laravel-project.test/api/roles/${id}`, formData).then(({data}) => {
             Swal.fire({
@@ -139,23 +129,23 @@ export default function EditRole() {
         })
     }
 
-   const updateRolePermissions = async (e: { preventDefault: () => void; }) => {
+    const updateRolePermissions = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
 
         formData.append('_method', 'PUT');
-        console.log( JSON.stringify(permissions));
+        console.log(JSON.stringify(permissions));
         formData.append('permissions', JSON.stringify(permissions))
 
-       const instance = axios.create({
-           headers: {'Authorization': 'Bearer '+ token}
-       });
+        const instance = axios.create({
+            headers: {'Authorization': 'Bearer ' + token}
+        });
         await instance.post(`http://user-laravel-project.test/api/role/permission/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
                 text: data.message
             })
-            navigate(`/role/edit/${id}`)
+            navigate(`/roles`)
         }).catch(({response}) => {
             if (response.status === 422) {
                 setValidationError(response.data.errors)
@@ -167,7 +157,6 @@ export default function EditRole() {
             }
         })
     }
-
 
     return (
         <div className="container">
@@ -184,7 +173,7 @@ export default function EditRole() {
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
-                                                        {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
+                                                        {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (<li>{value}</li>))}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -202,43 +191,51 @@ export default function EditRole() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Button className="mt-2" size="sm"  type="submit">
-                                                                            Update
-                                                                        </Button>
+                                    <Button className="mt-2" size="sm" type="submit">
+                                        Update
+                                    </Button>
                                 </Form>
 
                                 <Form onSubmit={updateRolePermissions}>
                                     <Row className='py-3'>
-                                    <div className="col-12">
-                                    <div className="card card-body">
-                                    <Form.Label>Permissions</Form.Label>
-                                    <div className="table-responsive">
-                                    {permissionsData.map((item: { [x: string]: any; }) => {
+                                        <div className="col-12">
+                                            <div className="card card-body">
+                                                <Form.Label>Permissions</Form.Label>
+                                                <div className="table-responsive">
+                                                    <Select
+                                                        labelId="demo-multiple-checkbox-label"
+                                                        id="demo-multiple-checkbox"
+                                                        multiple
+                                                        value={permissions}
+                                                        onChange={handleChange}
+                                                        input={<OutlinedInput label="Tag"/>}
+                                                        renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')}
+                                                        MenuProps={MenuProps}
+                                                    >
+                                                        {permissionsData.map((variant: any) => (
+                                                            <MenuItem key={variant.id} value={variant}>
+                                                                <Checkbox
+                                                                    checked={
+                                                                        permissions.findIndex((item: any) => item.id === variant.id) >= 0
+                                                                    }
+                                                                />
+                                                                <ListItemText primary={variant.name}/>
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </div>
 
-                                        return (
-                                                  <div
-                                                     key={item.id}
-                                                     style={{
-                                                     display: "flex",
-                                                      width: "150px"
-                                               }} >
-
-                                  {/*<input onChange={toggleHandler(item)} checked={checkedPermissions[item.id]}  value={checkedPermissions[item.id]} style={{ margin: "10px" }}   type="checkbox" />*/}
-                                  <Form.Label>{item.name}</Form.Label>
-
-                                  </div>
-                                  ); })}
-                                  </div>
-                                  </div>
-                                 <Button className="mt-2" size="sm"  type="submit"> Update </Button>
-                                 </div>
-                                 </Row>
-                            </Form>
+                                            </div>
+                                        </div>
+                                    </Row>
+                                    <Button className="mt-2" size="sm" type="submit"> Update Role's Permission </Button>
+                                </Form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
+

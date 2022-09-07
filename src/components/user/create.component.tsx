@@ -6,9 +6,13 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios'
 import Swal from 'sweetalert2';
 import {useNavigate} from 'react-router-dom'
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import {token} from "../auth/login.component";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
+import ListItemText from "@mui/material/ListItemText";
+import Select from '@mui/material/Select';
+
 
 export default function CreateProduct() {
     const navigate = useNavigate();
@@ -18,31 +22,62 @@ export default function CreateProduct() {
     const [email, setEmail] = useState("")
     const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
-    const animatedComponents = makeAnimated();
-    const [newarray, setarray] = useState([]);
+    const [userRoles, setUserRoles] = useState([])
+
 
     useEffect(() => {
         fetchRoles();
-    }, [newarray])
+    }, [])
 
 
     const fetchRoles = async () => {
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         const API = await instance.get('http://user-laravel-project.test/api/roles')
-        const serverResponse = API.data.data
-        const dropDownValue = serverResponse.map((response:  { [x: string]: any; }) => ({
-            "value": response.id, "label": response.name
-        }))
-        setRoles(dropDownValue)
+        const roles = API.data.data
+        setRoles(roles)
     }
 
-    const handleChange = (selectedOption:any) => {
-        setarray(selectedOption)
-    }
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+    let handleChange = (event:  any) => {
+        const {
+            target: {value},
+        }= event;
 
+        const filterdValue = value.filter(
+            (item: { id: any; }) => userRoles.findIndex((o: any) => o.id === item.id) >= 0
+        );
+
+        let duplicatesRemoved = value.filter((item: { id: any; }, itemIndex: any) =>
+            value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
+        );
+
+        let duplicateRemoved: any[] = [];
+        value.forEach((item: any) => {
+            if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
+                // @ts-ignore
+                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id === item.id);
+            } else {
+                duplicateRemoved.push(item);
+            }
+        });
+
+        // @ts-ignore
+        setUserRoles(duplicateRemoved);
+    };
     const createUser = async (e: { preventDefault: () => void; }) => {
+
+
         e.preventDefault();
 
         const formData = new FormData()
@@ -50,10 +85,9 @@ export default function CreateProduct() {
         formData.append('name', name)
         formData.append('password', password)
         formData.append('email', email)
-        console.log(newarray)
-        formData.append('roles', JSON.stringify(newarray))
+        formData.append('roles', JSON.stringify(userRoles))
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.post(`http://user-laravel-project.test/api/users`, formData).then(({data}) => {
             Swal.fire({
@@ -84,7 +118,7 @@ export default function CreateProduct() {
                                 <div className="col-12">
                                     <div className="alert alert-danger">
                                         <ul className="mb-0">
-                                            {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
+                                            {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (<li>{value}</li>))}
                                         </ul>
                                     </div>
                                 </div>
@@ -120,15 +154,30 @@ export default function CreateProduct() {
                                         </Form.Group>
                                     </Col>
                                 </Row>
+
                                 <Row className="my-3">
                                     <Col>
                                         <Form.Group controlId="Roles">
                                             <Form.Label>Roles</Form.Label>
-                                            <Select name={"roles[]"} options={roles} onChange={handleChange} components={animatedComponents} isMulti/>
+                                            <div className="table-responsive">
+                                                <Select labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
+                                                        input={<OutlinedInput label="Tag"/>} renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')} MenuProps={MenuProps}>
+                                                    {roles.map((variant: any) => (
+                                                        <MenuItem key={variant.id} value={variant}>
+                                                            <Checkbox
+                                                                checked={
+                                                                    userRoles.findIndex((item: any) => item.id === variant.id) >= 0
+                                                                }
+                                                            />
+                                                            <ListItemText primary={variant.name}/>
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </div>
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Button variant="primary" className="mt-2" size="lg"  type="submit">
+                                <Button variant="primary" className="mt-2" size="lg" type="submit">
                                     Save
                                 </Button>
                             </Form>
