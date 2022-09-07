@@ -91,7 +91,7 @@ export default function List() {
                                                 <td>{row['name']}</td>
                                                 <td>{row['email']}</td>
                                                 <td>{row['roles'].map((row: { [x: string]: any; })=>(
-                                                        row['name']
+                                                        row['name'] + ','
                                                     ))}
                                                 </td>
 

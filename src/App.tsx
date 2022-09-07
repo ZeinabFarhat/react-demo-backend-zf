@@ -22,6 +22,7 @@ import CreateRole from "./components/role/create.component";
 import EditRole from "./components/role/edit.component";
 
 import Login from "./components/auth/login.component";
+import LogOut from "./components/auth/logout.component";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
                 Users
             </Link>
                 <Link  className="navbar-brand text-white" to="/login" >LogIn</Link>
+                <Link  className="navbar-brand text-white" to="/logout" >LogOut</Link>
             </Container>
     </Navbar>
 
@@ -113,6 +115,13 @@ function App() {
                 <Col md={12}>
                     <Routes>
                         <Route  path='/login' element={<Login setAuth={setAuth} setToken={setToken} />} />
+                    </Routes>
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <Routes>
+                        <Route  path='/logout' element={<LogOut setAuth={setAuth} setToken={setToken} />} />
                     </Routes>
                 </Col>
             </Row>
