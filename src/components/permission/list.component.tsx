@@ -6,11 +6,10 @@ import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
 
 
-
 export default function List() {
 
     const [permissions, setProducts] = useState([])
-    const token =  JSON.parse(localStorage.getItem('token') as string );
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [curent_page, setCurrentPage] = useState("")
     const [per_page, setPerPage] = useState("")
     const [total, setTotal] = useState("")
@@ -21,10 +20,10 @@ export default function List() {
 
     const fetchPermissions = async (pageNumber = 1) => {
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
-        await instance.get(`http://user-laravel-project.test/api/permissions?page=`+ pageNumber).then(({data}) => {
+        await instance.get(`http://user-laravel-project.test/api/permissions?page=` + pageNumber).then(({data}) => {
             setProducts(data.data);
             setTotal(data.meta.total);
             setCurrentPage(data.meta.current_page);
@@ -50,7 +49,7 @@ export default function List() {
         }
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
         await instance.delete(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
@@ -91,7 +90,8 @@ export default function List() {
                                     id: any;
                                     roles: any;
                                     email: any;
-                                    name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined)=>{
+                                    name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
+                                }, index: React.Key | null | undefined) => {
                                     return <>
                                         <tr>
                                             <td>{permission.name}</td>
@@ -110,17 +110,17 @@ export default function List() {
 
                                 </tbody>
                             </table>
-                                    <div className="mt-3">
-                                    <Pagination
+                            <div className="mt-3">
+                                <Pagination
                                     totalItemsCount={total}
                                     activePage={curent_page}
                                     itemsCountPerPage={per_page}
                                     itemClass="page-item"
-                                    linkClass ="page-link"
+                                    linkClass="page-link"
                                     firstPageText="First"
                                     lastPageText="Last"
-                                    onChange={(pageNumber: number | undefined)=>fetchPermissions(pageNumber)}/>
-                                    </div>
+                                    onChange={(pageNumber: number | undefined) => fetchPermissions(pageNumber)}/>
+                            </div>
                         </div>
                     </div>
                 </div>
