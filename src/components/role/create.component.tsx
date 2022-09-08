@@ -9,13 +9,9 @@ import {useNavigate} from 'react-router-dom'
 
 export default function CreateRole() {
     const navigate = useNavigate();
-    const token =  JSON.parse(localStorage.getItem('token') as string );
-
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [name, setName] = useState("")
-
     const [validationError, setValidationError] = useState({})
-
-
     const createRole = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
@@ -24,7 +20,7 @@ export default function CreateRole() {
         formData.append('name', name)
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.post(`http://user-laravel-project.test/api/roles`, formData).then(({data}) => {
             Swal.fire({
@@ -59,7 +55,7 @@ export default function CreateRole() {
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
                                                     <ul className="mb-0">
-                                                        {Object.entries(validationError).map((key:{ [x: string]: any; }, value : any) => (<li>{value}</li>))}
+                                                        {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (<li>{value}</li>))}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -78,7 +74,7 @@ export default function CreateRole() {
                                         </Col>
                                     </Row>
 
-                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg" type="submit">
                                         Save
                                     </Button>
                                 </Form>

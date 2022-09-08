@@ -11,16 +11,17 @@ import Swal from 'sweetalert2';
 export default function EditPermission() {
     const navigate = useNavigate();
     const {id} = useParams()
-    const token =  JSON.parse(localStorage.getItem('token') as string );
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [name, setName] = useState("")
     const [validationError, setValidationError] = useState({})
 
     useEffect(() => {
         fetchPermission()
     }, [])
+
     const fetchPermission = async () => {
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
             const {name} = data
@@ -33,7 +34,6 @@ export default function EditPermission() {
         })
     }
 
-
     const updatePermission = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
@@ -43,7 +43,7 @@ export default function EditPermission() {
         formData.append('name', name)
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
         await instance.post(`http://user-laravel-project.test/api/permissions/${id}`, formData).then(({data}) => {
@@ -78,13 +78,6 @@ export default function EditPermission() {
                                         <div className="row">
                                             <div className="col-12">
                                                 <div className="alert alert-danger">
-                                                    <ul className="mb-0">
-                                                        {
-                                                            // Object.entries(validationError).map(([key, value]) => (
-                                                            //     <li key={key}>+{value}</li>
-                                                            // ))
-                                                        }
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +96,7 @@ export default function EditPermission() {
                                     </Row>
 
 
-                                    <Button variant="primary" className="mt-2" size="lg"  type="submit">
+                                    <Button variant="primary" className="mt-2" size="lg" type="submit">
                                         Update
                                     </Button>
                                 </Form>

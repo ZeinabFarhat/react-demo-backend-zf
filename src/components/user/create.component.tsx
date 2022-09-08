@@ -15,14 +15,13 @@ import Select from '@mui/material/Select';
 
 export default function CreateProduct() {
     const navigate = useNavigate();
-    const token =  JSON.parse(localStorage.getItem('token') as string );
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
     const [userRoles, setUserRoles] = useState([])
-
 
     useEffect(() => {
         fetchRoles();
@@ -48,10 +47,11 @@ export default function CreateProduct() {
             },
         },
     };
-    let handleChange = (event:  any) => {
+
+    let handleChange = (event: any) => {
         const {
             target: {value},
-        }= event;
+        } = event;
 
         const filterdValue = value.filter(
             (item: { id: any; }) => userRoles.findIndex((o: any) => o.id === item.id) >= 0
@@ -74,17 +74,15 @@ export default function CreateProduct() {
         // @ts-ignore
         setUserRoles(duplicateRemoved);
     };
+
     const createUser = async (e: { preventDefault: () => void; }) => {
-
-
         e.preventDefault();
-
         const formData = new FormData()
-
         formData.append('name', name)
         formData.append('password', password)
         formData.append('email', email)
         formData.append('roles', JSON.stringify(userRoles))
+
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });

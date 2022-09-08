@@ -5,11 +5,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
 
-
-
 export default function List() {
-    const token =  JSON.parse(localStorage.getItem('token') as string );
 
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const [users, setUsers] = useState([])
     const [curent_page, setCurrentPage] = useState("")
     const [per_page, setPerPage] = useState("")
@@ -22,10 +20,10 @@ export default function List() {
     const fetchUsers = async (pageNumber = 1) => {
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
-        await instance.get(`http://user-laravel-project.test/api/users?page=`+ pageNumber).then(({data}) => {
+        await instance.get(`http://user-laravel-project.test/api/users?page=` + pageNumber).then(({data}) => {
             console.log(data)
             setUsers(data.data);
             setTotal(data.meta.total);
@@ -53,7 +51,7 @@ export default function List() {
         }
 
         const instance = axios.create({
-            headers: {'Authorization': 'Bearer '+ token}
+            headers: {'Authorization': 'Bearer ' + token}
         });
 
 
@@ -70,9 +68,6 @@ export default function List() {
             })
         })
     }
-
-
-    // @ts-ignore
 
     // @ts-ignore
     return (
@@ -97,44 +92,45 @@ export default function List() {
                                 </thead>
                                 <tbody>
 
-                                        {users.map((user: {
-                                            id: any;
-                                                roles: any;
-                                                email: any;
-                                                name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined)=>{
-                                                return <>
-                                                    <tr>
-                                                        <td>{user.name}</td>
-                                                        <td>{user.email}</td>
-                                                        <td>{user.roles.map((row: { [x: string]: any; })=>(
-                                                            row['name'] + ','
-                                                        ))}
-                                                        </td>
-                                                        <td>
-                                                                               <Link to={`/user/edit/${user.id}`} className='btn btn-success me-2'>
-                                                                                 Edit
-                                                                                </Link>
-                                                                                <Button variant="danger" onClick={() => deleteUser(user.id)}>
-                                                                                    Delete
-                                                                                </Button>
-                                                                            </td>
-                                                    </tr>
-                                                </>
-                                            })}
+                                {users.map((user: {
+                                    id: any;
+                                    roles: any;
+                                    email: any;
+                                    name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
+                                }, index: React.Key | null | undefined) => {
+                                    return <>
+                                        <tr>
+                                            <td>{user.name}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.roles.map((row: { [x: string]: any; }) => (
+                                                row['name'] + ','
+                                            ))}
+                                            </td>
+                                            <td>
+                                                <Link to={`/user/edit/${user.id}`} className='btn btn-success me-2'>
+                                                    Edit
+                                                </Link>
+                                                <Button variant="danger" onClick={() => deleteUser(user.id)}>
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    </>
+                                })}
 
 
                                 </tbody>
                                 <div className="mt-3">
-                                <Pagination
-                                    totalItemsCount={total}
-                                    activePage={curent_page}
-                                    itemsCountPerPage={per_page}
-                                    itemClass="page-item"
-                                    linkClass ="page-link"
-                                    firstPageText="First"
-                                    lastPageText="Last"
-                                    onChange={(pageNumber: number | undefined)=>fetchUsers(pageNumber)}/>
-                            </div>
+                                    <Pagination
+                                        totalItemsCount={total}
+                                        activePage={curent_page}
+                                        itemsCountPerPage={per_page}
+                                        itemClass="page-item"
+                                        linkClass="page-link"
+                                        firstPageText="First"
+                                        lastPageText="Last"
+                                        onChange={(pageNumber: number | undefined) => fetchUsers(pageNumber)}/>
+                                </div>
                             </table>
                         </div>
                     </div>

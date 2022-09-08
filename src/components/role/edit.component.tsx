@@ -25,7 +25,7 @@ export default function EditRole() {
             },
         },
     };
-    const token =  JSON.parse(localStorage.getItem('token') as string );
+    const token = JSON.parse(localStorage.getItem('token') as string);
     const handleChange = (event: { target: { value: any; }; }) => {
         const {
             target: {value},
@@ -38,7 +38,6 @@ export default function EditRole() {
         let duplicatesRemoved = value.filter((item: { id: any; }, itemIndex: any) =>
             value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
         );
-
 
         // let duplicateRemoved: any[]  ;
         let duplicateRemoved: any[] = [];

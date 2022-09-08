@@ -4,16 +4,16 @@ import Swal from "sweetalert2";
 import {useNavigate} from 'react-router-dom'
 
 
-export var token='';
+export var token = '';
 
 // @ts-ignore
-const Login = ({setAuth,setToken}) => {
+const Login = ({setAuth, setToken}) => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     const [validationError, setValidationError] = useState({});
-    const handleSubmit = async(e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
         formData.append('email', email)
@@ -25,7 +25,7 @@ const Login = ({setAuth,setToken}) => {
                 text: data.message
             })
 
-           token = data.token;
+            token = data.token;
             setAuth(true);
             setToken(token);
             navigate("/")
