@@ -56,7 +56,7 @@ function App() {
                 <Link to={"/roles"} className="navbar-brand text-white">
                     Roles
                 </Link>
-                <Link to={"/"} className="navbar-brand text-white">
+                <Link to={"/users"} className="navbar-brand text-white">
                 Users
             </Link>
                 <Link  className="navbar-brand text-white" to="/login" >LogIn</Link>
@@ -104,7 +104,7 @@ function App() {
                         <Route path="/user/edit/:id" element={isAuthenticated
                             ? <EditUser  />
                             : <Navigate to="/login" replace />}/>
-                        <Route  path='/'  element={isAuthenticated
+                        <Route  path='/users'  element={isAuthenticated
                             ? <UserList  />
                             : <Navigate to="/login" replace />}/>
                     </Routes>
