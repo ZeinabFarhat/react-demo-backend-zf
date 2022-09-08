@@ -40,6 +40,7 @@ const Login = ({setAuth, setToken}) => {
             }
         })
     }
+
     return (
         <div>
             <h1>Login</h1>

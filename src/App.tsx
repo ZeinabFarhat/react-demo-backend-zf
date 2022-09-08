@@ -121,7 +121,7 @@ function App() {
             <Row>
                 <Col md={12}>
                     <Routes>
-                        <Route  path='/logout' element={<LogOut setAuth={setAuth} setToken={setToken} />} />
+                        <Route  path='/logout' element={<LogOut setAuth={setAuth} />} />
                     </Routes>
                 </Col>
             </Row>
