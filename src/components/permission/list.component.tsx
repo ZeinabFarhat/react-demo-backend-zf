@@ -2,29 +2,37 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import Pagination from 'react-js-pagination';
+
 
 
 export default function List() {
 
     const [permissions, setProducts] = useState([])
     const token =  JSON.parse(localStorage.getItem('token') as string );
+    const [curent_page, setCurrentPage] = useState("")
+    const [per_page, setPerPage] = useState("")
+    const [total, setTotal] = useState("")
 
     useEffect(() => {
-        fetchProducts()
+        fetchPermissions();
     }, [])
 
-    const fetchProducts = async () => {
+    const fetchPermissions = async (pageNumber = 1) => {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer '+ token}
         });
 
-        await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
-            setProducts(data.data)
+        await instance.get(`http://user-laravel-project.test/api/permissions?page=`+ pageNumber).then(({data}) => {
+            setProducts(data.data);
+            setTotal(data.meta.total);
+            setCurrentPage(data.meta.current_page);
+            setPerPage(data.meta.per_page);
         })
     }
 
-    const deleteProduct = async (id: any) => {
+    const deletePermission = async (id: any) => {
         const isConfirm = await Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -50,7 +58,7 @@ export default function List() {
                 icon: "success",
                 text: data.message
             })
-            fetchProducts()
+            fetchPermissions()
         }).catch(({response: {data}}) => {
             Swal.fire({
                 text: data.message,
@@ -78,25 +86,41 @@ export default function List() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    permissions.length > 0 && (
-                                        permissions.map((row: { [x: string]: any; }, key) => (
-                                            <tr key={key}>
-                                                <td>{row.name}</td>
-                                                <td>
-                                                    <Link to={`/permission/edit/${row.id}`} className='btn btn-success me-2'>
-                                                        Edit
-                                                    </Link>
-                                                    <Button variant="danger" onClick={() => deleteProduct(row.id)}>
-                                                        Delete
-                                                    </Button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )
-                                }
+
+                                {permissions.map((permission: {
+                                    id: any;
+                                    roles: any;
+                                    email: any;
+                                    name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, index: React.Key | null | undefined)=>{
+                                    return <>
+                                        <tr>
+                                            <td>{permission.name}</td>
+                                            <td>
+                                                <Link to={`/permission/edit/${permission.id}`} className='btn btn-success me-2'>
+                                                    Edit
+                                                </Link>
+                                                <Button variant="danger" onClick={() => deletePermission(permission.id)}>
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    </>
+                                })}
+
+
                                 </tbody>
                             </table>
+                                    <div className="mt-3">
+                                    <Pagination
+                                    totalItemsCount={total}
+                                    activePage={curent_page}
+                                    itemsCountPerPage={per_page}
+                                    itemClass="page-item"
+                                    linkClass ="page-link"
+                                    firstPageText="First"
+                                    lastPageText="Last"
+                                    onChange={(pageNumber: number | undefined)=>fetchPermissions(pageNumber)}/>
+                                    </div>
                         </div>
                     </div>
                 </div>
