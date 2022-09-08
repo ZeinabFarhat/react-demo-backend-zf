@@ -123,31 +123,6 @@ export default function List() {
                                             })}
 
 
-
-                                    {/*{users.length > 0 && (*/}
-                                {/*//         users.map((row: { [x: string]: any; }, key) => (*/}
-                                {/*//    */}
-                                {/*//              <tr key={key}>*/}
-                                {/*//                <td>{row['name']}</td>*/}
-                                {/*//                <td>{row['email']}</td>*/}
-                                {/*//                  <td>{row['roles'].map((row: { [x: string]: any; })=>(*/}
-                                {/*//                         row['name'] + ','*/}
-                                {/*//     //                 ))}*/}
-                                {/*//                 </td>*/}
-                                {/*//     //*/}
-                                {/*//                 <td>*/}
-                                {/*//                     <Link to={`/user/edit/${row.id}`} className='btn btn-success me-2'>*/}
-                                {/*//                         Edit*/}
-                                {/*//                     </Link>*/}
-                                {/*//                     <Button variant="danger" onClick={() => deleteUser(row.id)}>*/}
-                                {/*//                         Delete*/}
-                                {/*//                     </Button>*/}
-                                {/*//                 </td>*/}
-                                {/*//             </tr>*/}
-                                {/*//         ))*/}
-                                {/*//     )*/}
-                                {/*// }*/}
-                                {/*// }*/}
                                 </tbody>
                                 <div className="mt-3">
                                 <Pagination
@@ -155,7 +130,7 @@ export default function List() {
                                     activePage={curent_page}
                                     itemsCountPerPage={per_page}
                                     itemClass="page-item"
-                                    linkClass ="pageitem"
+                                    linkClass ="page-link"
                                     firstPageText="First"
                                     lastPageText="Last"
                                     onChange={(pageNumber: number | undefined)=>fetchUsers(pageNumber)}/>
