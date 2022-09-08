@@ -201,6 +201,7 @@ export default function EditRole() {
                                                     <Select
                                                         labelId="demo-multiple-checkbox-label"
                                                         id="demo-multiple-checkbox"
+                                                        className="w-100"
                                                         multiple
                                                         value={permissions}
                                                         onChange={handleChange}
