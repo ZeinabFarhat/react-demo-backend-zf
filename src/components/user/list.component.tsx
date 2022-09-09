@@ -93,6 +93,8 @@ export default function List() {
                                 <tbody>
 
                                 {users.map((user: {
+                                    last_name: any;
+                                    first_name: any;
                                     id: any;
                                     roles: any;
                                     email: any;
@@ -100,7 +102,7 @@ export default function List() {
                                 }, index: React.Key | null | undefined) => {
                                     return <>
                                         <tr>
-                                            <td>{user.name}</td>
+                                            <td>{user.first_name}  {user.last_name}</td>
                                             <td>{user.email}</td>
                                             <td>{user.roles.map((row: { [x: string]: any; }) => (
                                                 row['name'] + ','

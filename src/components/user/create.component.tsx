@@ -16,7 +16,8 @@ import Select from '@mui/material/Select';
 export default function CreateProduct() {
     const navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('token') as string);
-    const [name, setName] = useState("")
+    const [first_name, setFirstName] = useState("")
+    const [last_name, setLastName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [roles, setRoles] = useState([])
@@ -32,7 +33,7 @@ export default function CreateProduct() {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
-        const API = await instance.get('http://user-laravel-project.test/api/roles')
+        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles')
         const roles = API.data.data
         setRoles(roles)
     }
@@ -78,7 +79,8 @@ export default function CreateProduct() {
     const createUser = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
-        formData.append('name', name)
+        formData.append('first_name', first_name)
+        formData.append('last_name', last_name)
         formData.append('password', password)
         formData.append('email', email)
         formData.append('roles', JSON.stringify(userRoles))
@@ -123,10 +125,20 @@ export default function CreateProduct() {
                             <Form onSubmit={createUser}>
                                 <Row>
                                     <Col>
-                                        <Form.Group controlId="Name">
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control type="text" value={name} onChange={(event) => {
-                                                setName(event.target.value)
+                                        <Form.Group controlId="First Name">
+                                            <Form.Label>First Name</Form.Label>
+                                            <Form.Control type="text" value={first_name} onChange={(event) => {
+                                                setFirstName(event.target.value)
+                                            }}/>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group controlId="Last Name">
+                                            <Form.Label>Last Name</Form.Label>
+                                            <Form.Control type="text" value={last_name} onChange={(event) => {
+                                                setLastName(event.target.value)
                                             }}/>
                                         </Form.Group>
                                     </Col>
