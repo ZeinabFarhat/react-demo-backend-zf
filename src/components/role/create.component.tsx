@@ -16,12 +16,12 @@ export default function CreateRole() {
         e.preventDefault();
 
         const formData = new FormData()
-
         formData.append('name', name)
 
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
+
         await instance.post(`http://user-laravel-project.test/api/roles`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",

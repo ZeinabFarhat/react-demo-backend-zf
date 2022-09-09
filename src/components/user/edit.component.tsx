@@ -15,7 +15,6 @@ import Select from '@mui/material/Select';
 export default function EditUser() {
     const navigate = useNavigate();
     const {id} = useParams()
-
     const token = JSON.parse(localStorage.getItem('token') as string);
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
@@ -23,7 +22,6 @@ export default function EditUser() {
     const [roles, setRoles] = useState([])
     const [validationError, setValidationError] = useState({})
     const [userRoles, setUserRoles] = useState([])
-
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -110,6 +108,7 @@ export default function EditUser() {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
+
         await instance.post(`http://user-laravel-project.test/api/users/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",

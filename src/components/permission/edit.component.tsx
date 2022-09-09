@@ -94,8 +94,6 @@ export default function EditPermission() {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-
-
                                     <Button variant="primary" className="mt-2" size="lg" type="submit">
                                         Update
                                     </Button>

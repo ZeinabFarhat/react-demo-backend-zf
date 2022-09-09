@@ -106,10 +106,9 @@ export default function List() {
                                         </tr>
                                     </>
                                 })}
-
-
                                 </tbody>
                             </table>
+
                             <div className="mt-3">
                                 <Pagination
                                     totalItemsCount={total}

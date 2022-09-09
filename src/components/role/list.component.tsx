@@ -5,14 +5,12 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
 
-
 export default function List() {
     const token = JSON.parse(localStorage.getItem('token') as string);
     const [roles, setRoles] = useState([]);
     const [curent_page, setCurrentPage] = useState("")
     const [per_page, setPerPage] = useState("")
     const [total, setTotal] = useState("")
-
 
     useEffect(() => {
         fetchRoles()

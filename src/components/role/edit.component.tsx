@@ -25,6 +25,7 @@ export default function EditRole() {
             },
         },
     };
+
     const token = JSON.parse(localStorage.getItem('token') as string);
     const handleChange = (event: { target: { value: any; }; }) => {
         const {
@@ -39,7 +40,7 @@ export default function EditRole() {
             value.findIndex((o: { id: any; }, oIndex: any) => o.id === item.id && oIndex !== itemIndex)
         );
 
-        // let duplicateRemoved: any[]  ;
+
         let duplicateRemoved: any[] = [];
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
@@ -55,9 +56,7 @@ export default function EditRole() {
     };
 
     const {id} = useParams()
-
     const [permissionsData, setProducts] = useState([])
-
     const [name, setName] = useState("")
     const [permissions, setRolePermissions] = useState<string[]>([]);
     const [validationError, setValidationError] = useState({})
@@ -77,13 +76,12 @@ export default function EditRole() {
         })
     }
 
-
     const fetchRole = async () => {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
-        await instance.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
 
+        await instance.get(`http://user-laravel-project.test/api/roles/${id}`).then(({data}) => {
             const {name} = data.data
             const {permissions} = data.data
             setRolePermissions(permissions)
@@ -101,13 +99,12 @@ export default function EditRole() {
         e.preventDefault();
 
         const formData = new FormData()
-
         formData.append('_method', 'PUT');
         formData.append('name', name)
-
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
+
         await instance.post(`http://user-laravel-project.test/api/roles/${id}`, formData).then(({data}) => {
             Swal.fire({
                 icon: "success",
