@@ -24,7 +24,6 @@ export default function List() {
         });
 
         await instance.get(`http://user-laravel-project.test/api/users?page=` + pageNumber).then(({data}) => {
-            console.log(data)
             setUsers(data.data);
             setTotal(data.meta.total);
             setCurrentPage(data.meta.current_page);
