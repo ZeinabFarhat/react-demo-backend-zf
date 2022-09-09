@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
-import {useNavigate} from 'react-router-dom'
-
+import {useNavigate} from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../App.css";
 
 export var token = '';
 
@@ -11,7 +12,6 @@ const Login = ({setAuth, setToken}) => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-
     const [validationError, setValidationError] = useState({});
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -42,26 +42,38 @@ const Login = ({setAuth, setToken}) => {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
+        <div className="Auth-form-container">
+            <form className="Auth-form" onSubmit={handleSubmit}>
+                <div className="Auth-form-content">
+                    <h3 className="Auth-form-title">Sign In</h3>
+                    <div className="form-group mt-3">
+                        <label className="p-2">Email address</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="form-group mt-3">
+                        <label className="p-2">Password</label>
+                        <input id="password"
+                               type="password"
+                               name="password"
+                               placeholder="Password"
+                               value={password}
+                               onChange={e => setPassword(e.target.value)}
+                               required
+                        />
+                    </div>
+                    <div className="d-grid gap-2 mt-3">
+                        <button type="submit" className="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     );

@@ -71,7 +71,8 @@ export default function EditRole() {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
-        await instance.get(`http://user-laravel-project.test/api/permissions`).then(({data}) => {
+        await instance.get(`http://user-laravel-project.test/api/permissions/get_all_permissions`).then(({data}) => {
+            console.log(data)
             setProducts(data.data)
         })
     }

@@ -75,7 +75,7 @@ export default function EditUser() {
             headers: {'Authorization': 'Bearer ' + token}
         });
 
-        const API = await instance.get('http://user-laravel-project.test/api/roles')
+        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles')
         const roles = API.data.data
 
         setRoles(roles)
