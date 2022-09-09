@@ -76,7 +76,6 @@ export default function EditUser() {
 
         const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles')
         const roles = API.data.data
-        console.log(roles)
 
         setRoles(roles)
     }
