@@ -54,8 +54,9 @@ function App() {
                     <Link to={"/users"} className="navbar-brand text-white">
                         Users
                     </Link>
-                    <Link className="navbar-brand text-white" to="/login">LogIn</Link>
-                    <Link className="navbar-brand text-white" to="/logout">LogOut</Link>
+                    <Link className={isAuthenticated ? ".d.none" : "navbar-brand text-white"} to="/login">LogIn</Link>
+                    <Link className={isAuthenticated ? "navbar-brand text-white" : ".d.none"} to="/logout">LogOut</Link>
+
                 </Container>
             </Navbar>
 
