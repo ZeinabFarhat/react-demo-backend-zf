@@ -183,7 +183,7 @@ export default function CreateProduct() {
                                         <Form.Group controlId="Roles">
                                             <Form.Label>Roles</Form.Label>
                                             <div className="table-responsive">
-                                                <Select labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
+                                                <Select className="w-100" labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
                                                         input={<OutlinedInput label="Tag"/>} renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')} MenuProps={MenuProps}>
                                                     {roles.map((variant: any) => (
                                                         <MenuItem key={variant.id} value={variant}>
