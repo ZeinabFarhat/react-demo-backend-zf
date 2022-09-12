@@ -24,7 +24,7 @@ export default function EditPermission() {
             headers: {'Authorization': 'Bearer ' + token}
         });
         await instance.get(`http://user-laravel-project.test/api/permissions/${id}`).then(({data}) => {
-            const {name} = data
+            const {name} = data.data
             setName(name)
         }).catch(({response: {data}}) => {
             Swal.fire({
