@@ -36,6 +36,7 @@ export default function CreateRole() {
                     text: response.data.message,
                     icon: "error"
                 })
+                navigate("/login")
             }
         })
     }

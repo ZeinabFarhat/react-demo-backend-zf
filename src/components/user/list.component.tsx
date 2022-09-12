@@ -121,18 +121,19 @@ export default function List() {
 
 
                                 </tbody>
-                                <div className="mt-3">
-                                    <Pagination
-                                        totalItemsCount={total}
-                                        activePage={curent_page}
-                                        itemsCountPerPage={per_page}
-                                        itemClass="page-item"
-                                        linkClass="page-link"
-                                        firstPageText="First"
-                                        lastPageText="Last"
-                                        onChange={(pageNumber: number | undefined) => fetchUsers(pageNumber)}/>
-                                </div>
+
                             </table>
+                            <div className="mt-3">
+                            <Pagination
+                                totalItemsCount={total}
+                                activePage={curent_page}
+                                itemsCountPerPage={per_page}
+                                itemClass="page-item"
+                                linkClass="page-link"
+                                firstPageText="First"
+                                lastPageText="Last"
+                                onChange={(pageNumber: number | undefined) => fetchUsers(pageNumber)}/>
+                        </div>
                         </div>
                     </div>
                 </div>

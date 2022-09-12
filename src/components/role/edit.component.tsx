@@ -119,6 +119,7 @@ export default function EditRole() {
                     text: response.data.message,
                     icon: "error"
                 })
+                navigate("/login")
             }
         })
     }

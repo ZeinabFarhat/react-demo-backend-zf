@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -8,6 +8,7 @@ import Pagination from 'react-js-pagination';
 
 export default function List() {
 
+    const navigate = useNavigate();
     const [permissions, setProducts] = useState([])
     const token = JSON.parse(localStorage.getItem('token') as string);
     const [curent_page, setCurrentPage] = useState("")
@@ -63,6 +64,7 @@ export default function List() {
                 text: data.message,
                 icon: "error"
             })
+            navigate("/login")
         })
     }
 

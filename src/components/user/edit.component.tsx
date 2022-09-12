@@ -69,15 +69,28 @@ export default function EditUser() {
         setUserRoles(duplicateRemoved);
     };
 
+
     const fetchRoles = async () => {
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
 
-        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles')
-        const roles = API.data.data
+        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles').then(({data}) => {
 
-        setRoles(roles)
+            const roles = data.data
+            setRoles(roles)
+
+        }).catch(({response}) => {
+            if (response.status === 422) {
+                setValidationError(response.data.errors)
+            } else {
+                Swal.fire({
+                    text: response.data.message,
+                    icon: "error"
+                })
+                navigate("/login")
+            }
+        })
     }
 
     const fetchUser = async () => {

@@ -1,22 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
 
 export default function List() {
+    const navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('token') as string);
     const [roles, setRoles] = useState([]);
     const [curent_page, setCurrentPage] = useState("")
     const [per_page, setPerPage] = useState("")
     const [total, setTotal] = useState("")
+    const [validationError, setValidationError] = useState({})
 
     useEffect(() => {
         fetchRoles()
     }, [])
 
     const fetchRoles = async (pageNumber = 1) => {
+
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
@@ -25,6 +28,16 @@ export default function List() {
             setTotal(data.meta.total);
             setCurrentPage(data.meta.current_page);
             setPerPage(data.meta.per_page);
+        }).catch(({response}) => {
+            if (response.status === 422) {
+                setValidationError(response.data.errors)
+            } else {
+                Swal.fire({
+                    text: response.data.message,
+                    icon: "error"
+                })
+                navigate("/login")
+            }
         })
     }
 

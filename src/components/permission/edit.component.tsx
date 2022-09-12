@@ -60,6 +60,7 @@ export default function EditPermission() {
                     text: response.data.message,
                     icon: "error"
                 })
+                navigate("/login")
             }
         })
     }

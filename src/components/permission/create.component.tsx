@@ -38,6 +38,7 @@ export default function CreatePermission() {
                     icon: "error"
                 })
             }
+            navigate("/login")
         })
     }
 
