@@ -94,7 +94,7 @@ export default function List() {
                                     email: any;
                                     name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
                                 }, index: React.Key | null | undefined) => {
-                                    return <>
+                                    return <React.Fragment key={permission.id}>
                                         <tr>
                                             <td>{permission.name}</td>
                                             <td>
@@ -106,16 +106,16 @@ export default function List() {
                                                 </Button>
                                             </td>
                                         </tr>
-                                    </>
+                                    </React.Fragment>
                                 })}
                                 </tbody>
                             </table>
 
                             <div className="mt-3">
                                 <Pagination
-                                    totalItemsCount={total}
-                                    activePage={curent_page}
-                                    itemsCountPerPage={per_page}
+                                    totalItemsCount={Number(total)}
+                                    activePage={Number(curent_page)}
+                                    itemsCountPerPage={Number(per_page)}
                                     itemClass="page-item"
                                     linkClass="page-link"
                                     firstPageText="First"

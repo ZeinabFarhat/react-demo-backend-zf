@@ -99,8 +99,8 @@ export default function List() {
                                     email: any;
                                     name: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined;
                                 }, index: React.Key | null | undefined) => {
-                                    return <>
-                                        <tr>
+                                    return <React.Fragment key={user.id}>
+                                        <tr >
                                             <td>{user.first_name}  {user.last_name}</td>
                                             <td>{user.email}</td>
                                             <td>{user.roles.map((row: { [x: string]: any; }) => (
@@ -116,7 +116,7 @@ export default function List() {
                                                 </Button>
                                             </td>
                                         </tr>
-                                    </>
+                                    </React.Fragment>
                                 })}
 
 
@@ -125,9 +125,9 @@ export default function List() {
                             </table>
                             <div className="mt-3">
                             <Pagination
-                                totalItemsCount={total}
-                                activePage={curent_page}
-                                itemsCountPerPage={per_page}
+                                totalItemsCount={Number(total)}
+                                activePage={Number(curent_page)}
+                                itemsCountPerPage={Number(per_page)}
                                 itemClass="page-item"
                                 linkClass="page-link"
                                 firstPageText="First"
