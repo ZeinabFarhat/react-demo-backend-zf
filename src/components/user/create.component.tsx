@@ -80,7 +80,7 @@ export default function CreateProduct() {
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
                 // @ts-ignore
-                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id === item.id);
+                duplicateRemoved = duplicateRemoved.filter((x: any) => x.id !== item.id);
             } else {
                 duplicateRemoved.push(item);
             }
@@ -98,6 +98,7 @@ export default function CreateProduct() {
         formData.append('password', password)
         formData.append('email', email)
         formData.append('roles', JSON.stringify(userRoles))
+        console.log(userRoles);
 
         const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
@@ -111,6 +112,7 @@ export default function CreateProduct() {
             if (response.status === 422) {
                 setValidationError(response.data.errors)
             } else {
+                console.log(response);
                 Swal.fire({
                     text: response.data.message, icon: "error"
                 })

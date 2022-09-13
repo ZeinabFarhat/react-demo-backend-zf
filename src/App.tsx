@@ -107,11 +107,9 @@ function App() {
                 </Row>
 
                 <Row>
-
                     <Routes>
                         <Route path='/login' element={<Login setAuth={setAuth} setToken={setToken}/>}/>
                     </Routes>
-
                 </Row>
                 <Row>
                     <Col md={12}>
