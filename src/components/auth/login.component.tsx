@@ -7,7 +7,6 @@ import "../../App.css";
 
 export var token = '';
 
-// @ts-ignore
 const Login = ({setAuth, setToken}) => {
     const navigate = useNavigate();
     const [email, setEmail] = React.useState('');

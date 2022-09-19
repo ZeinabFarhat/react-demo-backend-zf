@@ -57,7 +57,6 @@ export default function EditUser() {
 
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
-                // @ts-ignore
                 duplicateRemoved = duplicateRemoved.filter((x) => x.id !== item.id);
 
             } else {
@@ -65,7 +64,6 @@ export default function EditUser() {
             }
         });
 
-        // @ts-ignore
         setUserRoles(duplicateRemoved);
     };
 

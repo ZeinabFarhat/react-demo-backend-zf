@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ac19114f-82e0-41f8-9ad9-3ad68fbc80a2" name="Changes" comment="" />
+    <list default="true" id="ac19114f-82e0-41f8-9ad9-3ad68fbc80a2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/login.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/login.component.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/auth/logout.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/logout.component.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/role/edit.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/role/edit.component.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/create.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/create.component.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/edit.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/edit.component.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/user/list.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/list.component.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +59,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="C:\xampp\htdocs\User-laravel-react-project\front-end\user-react-project\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -67,10 +76,26 @@
       <workItem from="1661256242517" duration="324000" />
       <workItem from="1661273965898" duration="6155000" />
       <workItem from="1661317283696" duration="3788000" />
+      <workItem from="1663135344961" duration="432000" />
+      <workItem from="1663144995764" duration="168000" />
+      <workItem from="1663335167713" duration="643000" />
+      <workItem from="1663563654155" duration="7641000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/user/create.component.tsx</url>
+          <line>11</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

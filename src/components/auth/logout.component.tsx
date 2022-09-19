@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom'
 
 export var token = '';
 
-// @ts-ignore
 const LogOut = ({setAuth}) => {
     const navigate = useNavigate();
 

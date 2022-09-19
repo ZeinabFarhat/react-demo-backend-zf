@@ -68,7 +68,6 @@ export default function List() {
         })
     }
 
-    // @ts-ignore
     return (
         <div className="container">
             <div className="row">

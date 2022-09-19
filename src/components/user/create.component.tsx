@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 
 
 export default function CreateProduct() {
+
     const navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('token') as string);
     const [first_name, setFirstName] = useState("")
@@ -28,12 +29,11 @@ export default function CreateProduct() {
         fetchRoles();
     }, [])
 
-
     const fetchRoles = async () => {
-        const instance = axios.create({
+    const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
-        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles').then(({data}) => {
+    const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles').then(({data}) => {
 
             const roles = data.data
             setRoles(roles)
@@ -79,14 +79,12 @@ export default function CreateProduct() {
         let duplicateRemoved: any[] = [];
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
-                // @ts-ignore
                 duplicateRemoved = duplicateRemoved.filter((x: any) => x.id !== item.id);
             } else {
                 duplicateRemoved.push(item);
             }
         });
 
-        // @ts-ignore
         setUserRoles(duplicateRemoved);
     };
 
@@ -109,18 +107,12 @@ export default function CreateProduct() {
             })
             navigate("/users")
         }).catch(({response}) => {
-            if (response.status === 422) {
-                setValidationError(response.data.errors)
-            } else {
-                console.log(response);
-                Swal.fire({
-                    text: response.data.message, icon: "error"
-                })
-            }
+            Swal.fire({
+                text: response.data.message, icon: "error"
+            })
         })
     }
 
-    // @ts-ignore
     return <div className="container">
         <div className="row justify-content-center">
             <div className="col-12 col-sm-12 col-md-6">
@@ -133,7 +125,8 @@ export default function CreateProduct() {
                                 <div className="col-12">
                                     <div className="alert alert-danger">
                                         <ul className="mb-0">
-                                            {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (<li>{value}</li>))}
+                                            {Object.entries(validationError).map((key: { [x: string]: any; }, value: any) => (
+                                                <li>{value}</li>))}
                                         </ul>
                                     </div>
                                 </div>
@@ -163,9 +156,10 @@ export default function CreateProduct() {
                                     <Col>
                                         <Form.Group controlId="Password">
                                             <Form.Label>Password</Form.Label>
-                                            <Form.Control type="password" value={password} required onChange={(event) => {
-                                                setPassword(event.target.value)
-                                            }}/>
+                                            <Form.Control type="password" value={password} required
+                                                          onChange={(event) => {
+                                                              setPassword(event.target.value)
+                                                          }}/>
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -185,8 +179,12 @@ export default function CreateProduct() {
                                         <Form.Group controlId="Roles">
                                             <Form.Label>Roles</Form.Label>
                                             <div className="table-responsive">
-                                                <Select className="w-100" labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={userRoles} onChange={handleChange}
-                                                        input={<OutlinedInput label="Tag"/>} renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')} MenuProps={MenuProps}>
+                                                <Select className="w-100" labelId="demo-multiple-checkbox-label"
+                                                        id="demo-multiple-checkbox" multiple value={userRoles}
+                                                        onChange={handleChange}
+                                                        input={<OutlinedInput label="Tag"/>}
+                                                        renderValue={(selected: any[]) => selected.map((x) => x.name).join(', ')}
+                                                        MenuProps={MenuProps}>
                                                     {roles.map((variant: any) => (
                                                         <MenuItem key={variant.id} value={variant}>
                                                             <Checkbox

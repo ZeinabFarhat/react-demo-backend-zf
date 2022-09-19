@@ -44,14 +44,13 @@ export default function EditRole() {
         let duplicateRemoved: any[] = [];
         value.forEach((item: any) => {
             if (duplicateRemoved.findIndex((o: any) => o.id === item.id) >= 0) {
-                // @ts-ignore
+
                 duplicateRemoved = duplicateRemoved.filter((x: any) => x.id !== item.id);
             } else {
                 duplicateRemoved.push(item);
             }
         });
 
-        // @ts-ignore
         setRolePermissions(duplicateRemoved);
     };
 
