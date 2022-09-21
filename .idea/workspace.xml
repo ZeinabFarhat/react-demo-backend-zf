@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ac19114f-82e0-41f8-9ad9-3ad68fbc80a2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/login.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/login.component.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/logout.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/logout.component.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/role/edit.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/role/edit.component.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/user/create.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/create.component.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/edit.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/edit.component.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/user/list.component.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/user/list.component.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +44,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../final-backend" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -79,7 +74,10 @@
       <workItem from="1663135344961" duration="432000" />
       <workItem from="1663144995764" duration="168000" />
       <workItem from="1663335167713" duration="643000" />
-      <workItem from="1663563654155" duration="7641000" />
+      <workItem from="1663563654155" duration="16395000" />
+      <workItem from="1663592604640" duration="1319000" />
+      <workItem from="1663651475393" duration="7059000" />
+      <workItem from="1663738291037" duration="4142000" />
     </task>
     <servers />
   </component>
@@ -92,7 +90,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/user/create.component.tsx</url>
           <line>11</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

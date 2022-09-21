@@ -17,7 +17,7 @@ export default function CreateProduct() {
 
     const navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('token') as string);
-    const [first_name, setFirstName] = useState("")
+    // const [first_name, setFirstName] = useState("")
     const [last_name, setLastName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -25,15 +25,34 @@ export default function CreateProduct() {
     const [validationError, setValidationError] = useState({})
     const [userRoles, setUserRoles] = useState([])
 
+    type User = {
+        first_name: string;
+        last_name: string;
+        password: string;
+        email: string;
+        roles: any[]
+    }
+
+    const user: User = {
+        first_name: '',
+        last_name: null,
+        password: null,
+        email: null,
+        roles: null
+    };
+
+    // const {setUser, getUser}= createUser<User>();
+
     useEffect(() => {
-        fetchRoles();
-    }, [])
+        fetchRoles().then(() => console.log('succeed'));
+    }, [user])
 
     const fetchRoles = async () => {
-    const instance = axios.create({
+        const instance = axios.create({
             headers: {'Authorization': 'Bearer ' + token}
         });
-    const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles').then(({data}) => {
+
+        const API = await instance.get('http://user-laravel-project.test/api/roles/get_all_roles').then(({data}) => {
 
             const roles = data.data
             setRoles(roles)
@@ -91,7 +110,8 @@ export default function CreateProduct() {
     const createUser = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
-        formData.append('first_name', first_name)
+        console.log(user.first_name);
+        formData.append('first_name', user.first_name)
         formData.append('last_name', last_name)
         formData.append('password', password)
         formData.append('email', email)
@@ -136,8 +156,9 @@ export default function CreateProduct() {
                                     <Col>
                                         <Form.Group controlId="First Name">
                                             <Form.Label>First Name</Form.Label>
-                                            <Form.Control type="text" value={first_name} onChange={(event) => {
-                                                setFirstName(event.target.value)
+                                            <Form.Control type="text" value={user.first_name} onChange={(event) => {
+                                                console.log(event.target.value);
+                                                user.first_name = event.target.value
                                             }}/>
                                         </Form.Group>
                                     </Col>
