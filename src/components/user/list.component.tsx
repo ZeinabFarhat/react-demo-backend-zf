@@ -53,7 +53,6 @@ export default function List() {
             headers: {'Authorization': 'Bearer ' + token}
         });
 
-
         await instance.delete(`http://user-laravel-project.test/api/users/${id}`).then(({data}) => {
             Swal.fire({
                 icon: "success",
@@ -89,7 +88,6 @@ export default function List() {
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 {users.map((user: {
                                     last_name: any;
                                     first_name: any;
@@ -117,11 +115,9 @@ export default function List() {
                                         </tr>
                                     </React.Fragment>
                                 })}
-
-
                                 </tbody>
-
                             </table>
+
                             <div className="mt-3">
                             <Pagination
                                 totalItemsCount={Number(total)}
