@@ -110,7 +110,7 @@ export default function CreateProduct() {
     const createUser = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const formData = new FormData()
-        formData.append('first_name', user.first_name)
+        formData.append('first_name', first_name)
         formData.append('last_name', last_name)
         formData.append('password', password)
         formData.append('email', email)
